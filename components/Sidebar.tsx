@@ -4,7 +4,7 @@ import {URLs} from "@/lib/urls";
 import Image from "next/image";
 import {cn} from "@/lib/utils";
 import {Montserrat} from "next/font/google";
-import {LayoutDashboard} from "lucide-react";
+import {Code, ImageIcon, LayoutDashboard, MessageSquare, Music, Settings, VideoIcon} from "lucide-react";
 
 const montserrat = Montserrat({
     weight: "600",
@@ -17,6 +17,41 @@ const routes = [
         icon: LayoutDashboard,
         href: URLs.dashboard,
         color: 'text-sky-500'
+    },
+    {
+        label: 'Conversation',
+        icon: MessageSquare,
+        href: URLs.conversation,
+        color: 'text-violet-500'
+    },
+    {
+        label: 'Image Generation',
+        icon: ImageIcon,
+        href: URLs.image,
+        color: 'text-pink-700'
+    },
+    {
+        label: 'Video Generation',
+        icon: VideoIcon,
+        href: URLs.video,
+        color: 'text-orange-700'
+    },
+    {
+        label: 'Music Generation',
+        icon: Music,
+        href: URLs.music,
+        color: 'text-emerald-500'
+    },
+    {
+        label: 'Code Generation',
+        icon: Code,
+        href: URLs.code,
+        color: 'text-green-700'
+    },
+    {
+        label: 'Settings',
+        icon: Settings,
+        href: URLs.settings,
     }
 ];
 
