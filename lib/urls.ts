@@ -8,5 +8,8 @@ export const URLs = {
     video: '/video',
     music: '/music',
     code: '/code',
-    settings: '/settings'
+    settings: '/settings',
+    api: {
+        conversation: '/api/conversation'
+    }
 };
