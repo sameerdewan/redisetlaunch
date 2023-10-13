@@ -7,7 +7,6 @@ const DashboardPage: React.FC = () => {
     return (
         <div>
             <p>Dashboard Page (Protected)</p>
-            <UserButton afterSignOutUrl={URLs.landing}/>
         </div>
     );
 };
