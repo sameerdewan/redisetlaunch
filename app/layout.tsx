@@ -11,14 +11,15 @@ export const metadata: Metadata = {
     description: 'AI Platform',
 }
 
-function RootLayout({children}: { children: React.ReactNode }) {
+const RootLayout: React.FC<React.PropsWithChildren> = ({children}) => {
+    // Returned UI
     return (
         <ClerkProvider>
             <html lang="en">
             <body className={inter.className}>{children}</body>
             </html>
         </ClerkProvider>
-    )
-}
+    );
+};
 
 export default RootLayout
