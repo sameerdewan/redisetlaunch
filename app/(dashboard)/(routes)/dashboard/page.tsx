@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import {ArrowRight, Code, ImageIcon, MessageSquare, Music, VideoIcon} from "lucide-react";
+import {AppWindow, ArrowRight, Code, LifeBuoy, ScrollText, Wallet} from "lucide-react";
 import {URLs} from "@/lib/urls";
 import {Card} from "@/components/ui/card";
 import {cn} from "@/lib/utils";
@@ -8,38 +8,38 @@ import {useRouter} from "next/navigation";
 
 const tools = [
     {
-        label: 'Conversation',
-        icon: MessageSquare,
+        label: 'Applications',
+        icon: AppWindow,
         color: 'text-violet-500',
         bgColor: 'bg-violet-500/10',
         href: URLs.conversation
     },
     {
-        label: 'Music Generation',
-        icon: Music,
+        label: 'Documentation',
+        icon: ScrollText,
         color: 'text-emerald-500',
         bgColor: 'bg-emerald-500/10',
         href: URLs.music
     },
     {
-        label: 'Image Generation',
-        icon: ImageIcon,
+        label: 'Billing',
+        icon: Wallet,
         color: 'text-pink-700',
         bgColor: 'bg-pink-700/10',
         href: URLs.image
     },
     {
-        label: 'Video Generation',
-        icon: VideoIcon,
+        label: 'Support',
+        icon: LifeBuoy,
         color: 'text-orange-700',
         bgColor: 'bg-orange-700/10',
         href: URLs.video
     },
     {
-        label: 'Code Generation',
+        label: 'Settings',
         icon: Code,
-        color: 'text-green-700',
-        bgColor: 'bg-green-700/10',
+        color: 'text-zinc-700',
+        bgColor: 'bg-zinc-700/10',
         href: URLs.code
     }
 ];
@@ -52,10 +52,17 @@ const DashboardPage: React.FC = () => {
     return (
         <div>
             <div className='mb-8 space-y-4'>
-                <h2 className='text-2xl md:text-4xl font-bold text-center'>Explore the power of AI</h2>
-                <p className='text-muted-foreground font-light text-sm md:text-lg text-center'>
-                    Chat with the smartest AI - Experience the power of AI
-                </p>
+                <h2 className='text-2xl md:text-3xl font-bold text-center'>
+                    Cost-Efficient Feature Flagging & Configuration
+                </h2>
+                <div className='text-muted-foreground font-light text-md md:text-md text-center'>
+                    <span className='leading-loose block'>
+                        Tailored API options, cloud deployment, and on-premises solutions.
+                    </span>
+                    <span className='leading-loose block'>
+                        Versatile solutions, budget-friendly pricing.
+                    </span>
+                </div>
             </div>
             <div className='px-4 md:px-20 lg:px-32 space-y-4'>
                 {tools.map(tool => (
