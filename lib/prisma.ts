@@ -1,14 +1,13 @@
 import {PrismaClient} from "@prisma/client";
 
 declare global {
-    // noinspection ES6ConvertVarToLetConst
-    var prismaClient: PrismaClient | undefined;
+    var prisma: PrismaClient | undefined;
 }
 
-const prisma = globalThis.prismaClient ?? new PrismaClient();
+const prismadb = globalThis.prisma || new PrismaClient();
 
 if (process.env.NODE_ENV !== "production") {
-    globalThis.prismaClient = prisma;
+    globalThis.prisma = prismadb;
 }
 
-export default prisma;
+export default prismadb;
