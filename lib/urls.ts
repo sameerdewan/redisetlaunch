@@ -3,13 +3,12 @@ export const URLs = {
     signUp: '/sign-up',
     landing: '/',
     dashboard: '/dashboard',
-    conversation: '/conversation',
-    image: '/image',
-    video: '/video',
-    music: '/music',
-    code: '/code',
+    applications: '/applications',
+    documentation: '/documentation',
+    billing: '/billing',
+    support: '/support',
     settings: '/settings',
     api: {
-        conversation: '/api/conversation'
+        conversation: '/api/applications'
     }
 };

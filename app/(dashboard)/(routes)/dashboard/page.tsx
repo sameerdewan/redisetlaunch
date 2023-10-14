@@ -12,35 +12,35 @@ const tools = [
         icon: AppWindow,
         color: 'text-violet-500',
         bgColor: 'bg-violet-500/10',
-        href: URLs.conversation
+        href: URLs.applications
     },
     {
         label: 'Documentation',
         icon: ScrollText,
         color: 'text-emerald-500',
         bgColor: 'bg-emerald-500/10',
-        href: URLs.music
+        href: URLs.documentation
     },
     {
         label: 'Billing',
         icon: Wallet,
         color: 'text-pink-700',
         bgColor: 'bg-pink-700/10',
-        href: URLs.image
+        href: URLs.billing
     },
     {
         label: 'Support',
         icon: LifeBuoy,
         color: 'text-orange-700',
         bgColor: 'bg-orange-700/10',
-        href: URLs.video
+        href: URLs.support
     },
     {
         label: 'Settings',
         icon: Code,
         color: 'text-zinc-700',
         bgColor: 'bg-zinc-700/10',
-        href: URLs.code
+        href: URLs.settings
     }
 ];
 
@@ -64,7 +64,7 @@ const DashboardPage: React.FC = () => {
                     </span>
                 </div>
             </div>
-            <div className='px-4 md:px-20 lg:px-32 space-y-4'>
+            <div className='px-4 md:px-20 lg:px-32 space-y-4 pb-8'>
                 {tools.map(tool => (
                     <Card
                         onClick={() => router.push(tool.href)}

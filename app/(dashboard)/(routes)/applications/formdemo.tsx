@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Heading from "@/components/Heading";
-import {MessageSquare} from "lucide-react";
+import {AppWindow, MessageSquare} from "lucide-react";
 import {useForm} from "react-hook-form";
 import * as z from 'zod';
 import {formSchema} from './constants';
@@ -15,7 +15,7 @@ import OpenAI from "openai";
 import ChatCompletionMessage = OpenAI.ChatCompletionMessage;
 import {URLs} from "@/lib/urls";
 
-const ConversationPage: React.FC = () => {
+const ApplicationsPage: React.FC = () => {
     // Navigation
     const router = useRouter();
 
@@ -52,9 +52,9 @@ const ConversationPage: React.FC = () => {
     return (
         <div>
             <Heading
-                title='Conversation'
-                description='Our most advanced conversation model.'
-                icon={MessageSquare}
+                title='Applications'
+                description='List of all of your current applications.'
+                icon={AppWindow}
                 iconColor='text-violet-500'
                 bgColor='bg-violet-500/10'
             />
@@ -96,4 +96,4 @@ const ConversationPage: React.FC = () => {
     );
 };
 
-export default ConversationPage;
+export default ApplicationsPage;

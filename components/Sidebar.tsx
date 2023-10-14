@@ -7,7 +7,7 @@ import {cn} from "@/lib/utils";
 import {Montserrat} from "next/font/google";
 import {
     AppWindow,
-    LayoutDashboard,
+    LayoutDashboard, LifeBuoy,
     ScrollText,
     Settings,
     Wallet
@@ -28,17 +28,22 @@ const routes = [
     {
         label: 'Applications',
         icon: AppWindow,
-        href: URLs.conversation,
+        href: URLs.applications,
     },
     {
         label: 'Documentation',
         icon: ScrollText,
-        href: URLs.image,
+        href: URLs.documentation,
     },
     {
         label: 'Billing',
         icon: Wallet,
-        href: URLs.music,
+        href: URLs.billing,
+    },
+    {
+        label: 'Support',
+        icon: LifeBuoy,
+        href: URLs.support
     },
     {
         label: 'Settings',
