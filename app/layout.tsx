@@ -8,8 +8,8 @@ import ScrollToTopButton from "@/components/ScrollToTopButton";
 const inter = Inter({subsets: ['latin']})
 
 export const metadata: Metadata = {
-    title: 'Genius',
-    description: 'AI Platform',
+    title: 'reactflags',
+    description: 'Feature flagging made cheap and easy',
 }
 
 const RootLayout: React.FC<React.PropsWithChildren> = ({children}) => {

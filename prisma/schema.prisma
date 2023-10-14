@@ -18,3 +18,58 @@ model UserApiLimit {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Subscription {
+  id String @id @default(cuid())
+  userId String @unique
+  requestCount Int @default(0)
+  stripeCustomerId String? @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId String? @unique @map(name: "stripe_subscription_id")
+  stripePriceId String? @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Application {
+  id String @id @default(cuid())
+  userId String @unique
+  name String @unique @prisma.VarChar(50)
+  description String? @prisma.VarChar(240)
+  environments Environment[]
+  flags Flag[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Environment {
+  id String @id @default(cuid())
+  userId String @unique
+  name String @unique @prisma.VarChar(50)
+  description String? @prisma.VarChar(240)
+  applicationId String
+  application Application @relation(fields: [applicationId], references: [id])
+  flags Flag[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([applicationId])
+}
+
+model Flag {
+  id String @id @default(cuid())
+  userId String @unique
+  name String @unique @prisma.VarChar(50)
+  description String? @prisma.VarChar(240)
+  value Json
+  applicationId String
+  application Application @relation(fields: [applicationId], references: [id])
+  environmentId String
+  environment Environment @relation(fields: [environmentId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([applicationId])
+  @@index([environmentId])
+}
+
