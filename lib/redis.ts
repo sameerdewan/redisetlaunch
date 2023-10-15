@@ -1,28 +1,15 @@
-import {Redis} from "@upstash/redis";
-import {Subscription} from "@prisma/client";
-import prisma from "@/lib/prisma";
+import {createClient} from 'redis';
 
 declare global {
-    var redisClient: Redis | undefined;
+    var clientRedis: any;
 }
 
-const redis = globalThis.redisClient || new Redis({
-    url: process.env.UPSTASH_REDIS_REST_URL!,
-    token: process.env.UPSTASH_REDIS_REST_TOKEN!
+const redis = globalThis.clientRedis || createClient({
+    url: process.env.UPSTASH_REDIS_REST_URL!
 });
 
 if (process.env.NODE_ENV !== 'production') {
-    globalThis.redisClient = redis;
+    globalThis.clientRedis = redis;
 }
-
-export type RedisCachedData<T> = {
-    data: T;
-    type: 'string' | 'number' | 'boolean' | 'json';
-    version: number;
-} | null;
 
 export default redis;
-
-export abstract class RedisCacheClient {
-    private static constructRedisKey: (environmentId: string, userId: string) => string;
-}
