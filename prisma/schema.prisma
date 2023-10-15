@@ -11,6 +11,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum ValueType {
+  STRING
+  NUMBER
+  BOOLEAN
+  JSON
+}
+
 model UserApiLimit {
   id String @id @default(cuid())
   userId String @unique
@@ -22,7 +29,10 @@ model UserApiLimit {
 model Subscription {
   id String @id @default(cuid())
   userId String @unique
-  requestCount Int @default(0)
+  reads Int @default(0)
+  maxReads Int @default(0)
+  writes Int @default(0)
+  maxWrites Int @default(0)
   stripeCustomerId String? @unique @map(name: "stripe_customer_id")
   stripeSubscriptionId String? @unique @map(name: "stripe_subscription_id")
   stripePriceId String? @map(name: "stripe_price_id")
@@ -62,7 +72,8 @@ model Flag {
   userId String @unique
   name String @prisma.VarChar(50)
   description String? @prisma.VarChar(240)
-  value Json
+  value Json // In the shape of {data: instanceOf valueType}
+  valueType ValueType
   applicationId String
   application Application @relation(fields: [applicationId], references: [id])
   environmentId String

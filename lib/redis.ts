@@ -1,4 +1,6 @@
 import {Redis} from "@upstash/redis";
+import {Subscription} from "@prisma/client";
+import prisma from "@/lib/prisma";
 
 declare global {
     var redisClient: Redis | undefined;

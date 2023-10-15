@@ -1,6 +1,6 @@
 import redis, {RedisCacheClient, RedisCachedData} from "@/lib/redis";
 import prisma from "@/lib/prisma";
-import {Flag} from "@prisma/client"
+import {Flag} from "@prisma/client";
 
 class FlagsService implements RedisCacheClient {
     private static constructRedisKey(environmentId: string, userId: string): string {
@@ -21,6 +21,7 @@ class FlagsService implements RedisCacheClient {
                 name: flag.name,
                 description: flag.description,
                 value: flag.value!,
+                valueType: flag.valueType,
                 applicationId,
                 environmentId
             }
@@ -44,6 +45,7 @@ class FlagsService implements RedisCacheClient {
                 name: flag.name,
                 description: flag.description,
                 value: flag.value!,
+                valueType: flag.valueType
             }
         });
         const redisKey: string = this.constructRedisKey(environmentId, userId);
@@ -70,7 +72,7 @@ class FlagsService implements RedisCacheClient {
     public static async getFlags(
         userId: string,
         environmentId: string,
-        version: number
+        version: number,
     ): Promise<Flag[]> {
         const redisKey: string = this.constructRedisKey(environmentId, userId);
         const redisStringCachedData: string | null = await redis.get<string>(redisKey);
