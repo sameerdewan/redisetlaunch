@@ -12,4 +12,10 @@ if (process.env.NODE_ENV !== 'production') {
     globalThis.clientRedis = redis;
 }
 
+/*
+* Every RedisRepositoryClient must implement its own methods
+* that ensure data stability as Redis does not enforce relationships.
+* */
+export interface RedisRepositoryClient {}
+
 export default redis;

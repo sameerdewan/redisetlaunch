@@ -1,6 +1,17 @@
 import {Schema} from "redis-om";
+import {Nullable} from "@/lib/utils";
 
-const Application = new Schema('application', {
+export type Application = Nullable<{
+    userId: string;
+    name: string;
+    description: string;
+    flagIds: string[];
+    environmentIds: string[];
+    createdAt: Date;
+    updatedAt: Date;
+}>
+
+export const ApplicationSchema = new Schema('application', {
     userId: {
         type: 'string'
     },
@@ -30,5 +41,3 @@ const Application = new Schema('application', {
     indexName: 'application-index',
     indexHashName: 'application-index-hash'
 });
-
-export default Application;
