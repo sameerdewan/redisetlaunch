@@ -1,6 +1,17 @@
 import {Schema} from "redis-om";
+import {Nullable} from "@/lib/utils";
 
-const Environment = new Schema('environment', {
+export type Environment = Nullable<{
+    name: string;
+    userId: string;
+    description: string;
+    applicationId: string;
+    flagIds: string[];
+    createdAt: Date;
+    updatedAt: Date;
+}>;
+
+export const EnvironmentSchema = new Schema('environment', {
     name: {
         type: 'string',
         indexed: true
@@ -28,5 +39,3 @@ const Environment = new Schema('environment', {
     indexName: 'environment-index',
     indexHashName: 'environment-hash-index'
 });
-
-export default Environment;

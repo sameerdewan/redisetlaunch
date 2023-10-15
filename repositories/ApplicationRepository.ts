@@ -2,7 +2,6 @@ import {Entity} from "redis-om";
 import {Application, ApplicationSchema} from "@/models/Application";
 import {RedisRepositoryClient} from "@/lib/redis";
 
-
 class ApplicationRepositoryClient extends RedisRepositoryClient {
     constructor() {
         super('application', ApplicationSchema);
@@ -15,7 +14,7 @@ class ApplicationRepositoryClient extends RedisRepositoryClient {
             .where('userId')
             .eq(userId)
             .return
-            .all() as Application[];
+            .all() as Application[] ?? [];
     }
 
     public async getApplicationByIdAndUserId(id: string, userId: string): Promise<Application> {
