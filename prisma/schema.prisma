@@ -34,7 +34,7 @@ model Subscription {
 model Application {
   id String @id @default(cuid())
   userId String @unique
-  name String @unique @prisma.VarChar(50)
+  name String @prisma.VarChar(50)
   description String? @prisma.VarChar(240)
   environments Environment[]
   flags Flag[]
@@ -45,13 +45,14 @@ model Application {
 model Environment {
   id String @id @default(cuid())
   userId String @unique
-  name String @unique @prisma.VarChar(50)
+  name String @prisma.VarChar(50)
   description String? @prisma.VarChar(240)
   applicationId String
   application Application @relation(fields: [applicationId], references: [id])
   flags Flag[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  version Int @default(0)
 
   @@index([applicationId])
 }
@@ -59,7 +60,7 @@ model Environment {
 model Flag {
   id String @id @default(cuid())
   userId String @unique
-  name String @unique @prisma.VarChar(50)
+  name String @prisma.VarChar(50)
   description String? @prisma.VarChar(240)
   value Json
   applicationId String
