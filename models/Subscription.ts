@@ -1,12 +1,8 @@
 import {Schema} from "redis-om";
 
 const Subscription = new Schema('subscription', {
-    id: {
-        type: 'number',
-        indexed: true
-    },
     userId: {
-        type: 'number',
+        type: 'string',
         indexed: true
     },
     reads: {
@@ -43,6 +39,10 @@ const Subscription = new Schema('subscription', {
     updatedAt: {
         type: 'date'
     }
-}, {dataStructure: 'JSON'});
+}, {
+    dataStructure: 'JSON',
+    indexName: 'subscription-index',
+    indexHashName: 'subscription-index-hash'
+});
 
 export default Subscription;
