@@ -1,6 +1,27 @@
 import {Schema} from "redis-om";
+import {Nullable} from "@/lib/utils";
 
-const Flag = new Schema('flag', {
+export enum FlagType {
+    STRING = 'string',
+    NUMBER = 'number',
+    BOOLEAN = 'boolean',
+    JSON = 'json'
+}
+
+export type Flag = Nullable<{
+    id: string;
+    userId: string;
+    name: string;
+    description?: string;
+    value: string;
+    valueType: FlagType;
+    applicationId: string;
+    environmentId: string;
+    createdAt: Date;
+    updatedAt: Date;
+}>
+
+export const FlagSchema = new Schema('flag', {
     userId: {
         type: 'string'
     },
@@ -36,5 +57,3 @@ const Flag = new Schema('flag', {
     indexName: 'flag-index',
     indexHashName: 'flag-index-hash'
 });
-
-export default Flag;

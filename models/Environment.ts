@@ -2,6 +2,7 @@ import {Schema} from "redis-om";
 import {Nullable} from "@/lib/utils";
 
 export type Environment = Nullable<{
+    id: string;
     name: string;
     userId: string;
     description: string;
