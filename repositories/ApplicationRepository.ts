@@ -2,11 +2,15 @@ import {Entity, Repository} from "redis-om";
 import {Application, ApplicationSchema} from "@/models/Application";
 import redis, {RedisRepositoryClient} from "@/lib/redis";
 
-export const applicationRepository = new Repository(ApplicationSchema, redis);
 
-class ApplicationRepositoryClient implements RedisRepositoryClient {
-    public static async getApplicationsByUserId(userId: string): Promise<Application[]> {
-        return await applicationRepository
+class ApplicationRepositoryClient extends RedisRepositoryClient {
+    constructor() {
+        super('application', new Repository(ApplicationSchema, redis));
+    }
+
+    public async getApplicationsByUserId(userId: string): Promise<Application[]> {
+        await this.waitForRedisIndexCreated();
+        return await this.repository
             .search()
             .where('userId')
             .eq(userId)
@@ -14,25 +18,38 @@ class ApplicationRepositoryClient implements RedisRepositoryClient {
             .all() as Application[];
     }
 
-    public static async getApplicationByIdAndUserId(id: string, userId: string): Promise<Application> {
-        const application = await applicationRepository.fetch(id) as Application;
+    public async getApplicationByIdAndUserId(id: string, userId: string): Promise<Application> {
+        await this.waitForRedisIndexCreated();
+        const application = await this.repository.fetch(id) as Application;
         if (application === null) return null;
         if (application.userId !== userId) return null;
         return application;
     }
 
-    public static async saveApplication(application: Application): Promise<Application> {
-        return await applicationRepository.save(application as Entity) as Application;
+    public async saveApplication(application: Application): Promise<Application> {
+        await this.waitForRedisIndexCreated();
+        return await this.repository.save(application as Entity) as Application;
     }
 
-    public static async deleteApplicationByIdAndUserId(id: string, userId: string): Promise<Application> {
+    public async deleteApplicationByIdAndUserId(id: string, userId: string): Promise<Application> {
+        await this.waitForRedisIndexCreated();
         const application = await this.getApplicationByIdAndUserId(id, userId);
         if (application === null) return null;
         if (application.environmentIds.length) return null;
         if (application.flagIds.length) return null;
-        await applicationRepository.remove(application[id as keyof Application]);
+        await this.repository.remove(application[id as keyof Application]);
         return application;
     }
 }
 
-export default ApplicationRepositoryClient;
+declare global {
+    var applicationRepositoryClient: ApplicationRepositoryClient;
+}
+
+const applicationRepositoryClient = globalThis.applicationRepositoryClient || new ApplicationRepositoryClient();
+
+if (process.env.NODE_ENV !== 'production') {
+    globalThis.applicationRepositoryClient = applicationRepositoryClient;
+}
+
+export default applicationRepositoryClient;
