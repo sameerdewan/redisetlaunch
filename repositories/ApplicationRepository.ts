@@ -1,11 +1,11 @@
-import {Entity, Repository} from "redis-om";
+import {Entity} from "redis-om";
 import {Application, ApplicationSchema} from "@/models/Application";
-import redis, {RedisRepositoryClient} from "@/lib/redis";
+import {RedisRepositoryClient} from "@/lib/redis";
 
 
 class ApplicationRepositoryClient extends RedisRepositoryClient {
     constructor() {
-        super('application', new Repository(ApplicationSchema, redis));
+        super('application', ApplicationSchema);
     }
 
     public async getApplicationsByUserId(userId: string): Promise<Application[]> {

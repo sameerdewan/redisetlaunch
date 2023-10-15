@@ -1,5 +1,5 @@
 import {createClient} from 'redis';
-import {Repository} from "redis-om";
+import {Repository, Schema} from "redis-om";
 
 declare global {
     var clientRedis: any;
@@ -23,9 +23,9 @@ export class RedisRepositoryClient {
     indexCreated: boolean = false;
     pollIntervalMs: 50 = 50;
 
-    constructor(name: string, repository: Repository) {
+    constructor(name: string, schema: Schema) {
         this.name = name;
-        this.repository = repository;
+        this.repository = new Repository(schema, redis);
         this.repository
             .createIndex()
             .then(() => {
