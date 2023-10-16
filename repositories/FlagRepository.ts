@@ -29,6 +29,10 @@ class FlagRepositoryClient extends RedisRepositoryClient {
 
     public async saveFlag(flag: Flag): Promise<Flag> {
         await this.waitForRedisIndexCreated();
+        if (flag === null) return flag;
+        const now = new Date();
+        if (!flag.createdAt) flag.createdAt = now;
+        flag.updatedAt = now;
         return await this.repository.save(flag as Entity) as Flag;
     }
 

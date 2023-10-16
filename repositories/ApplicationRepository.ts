@@ -27,6 +27,10 @@ class ApplicationRepositoryClient extends RedisRepositoryClient {
 
     public async saveApplication(application: Application): Promise<Application> {
         await this.waitForRedisIndexCreated();
+        if (application === null) return null;
+        const now = new Date();
+        if (!application.createdAt) application.createdAt = now;
+        application.updatedAt = now;
         return await this.repository.save(application as Entity) as Application;
     }
 

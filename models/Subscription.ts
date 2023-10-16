@@ -1,7 +1,28 @@
 import {Schema} from "redis-om";
+import {Nullable} from "@/lib/utils";
 
-const Subscription = new Schema('subscription', {
+export type Subscription = Nullable<{
+    id: string;
+    userId: string;
+    subscriptionKey: string;
+    reads: number;
+    maxReads: number;
+    writes: number;
+    maxWrites: number;
+    stripeCustomerId?: string;
+    stripeSubscriptionId?: string;
+    stripePriceId?: string;
+    stripeCurrentPeriodEnd?: string;
+    createdAt: Date;
+    updatedAt: Date;
+}>
+
+export const SubscriptionSchema = new Schema('subscription', {
     userId: {
+        type: 'string',
+        indexed: true
+    },
+    subscriptionKey: {
         type: 'string',
         indexed: true
     },
@@ -44,5 +65,3 @@ const Subscription = new Schema('subscription', {
     indexName: 'subscription-index',
     indexHashName: 'subscription-index-hash'
 });
-
-export default Subscription;

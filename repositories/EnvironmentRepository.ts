@@ -29,6 +29,10 @@ class EnvironmentRepositoryClient extends RedisRepositoryClient {
 
     public async saveEnvironment(environment: Environment): Promise<Environment> {
         await this.waitForRedisIndexCreated();
+        if (environment === null) return null;
+        const now = new Date();
+        if (!environment.createdAt) environment.createdAt = now;
+        environment.updatedAt = now;
         return await this.repository.save(environment as Entity) as Environment;
     }
 
