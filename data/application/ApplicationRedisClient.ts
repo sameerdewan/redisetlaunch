@@ -2,8 +2,9 @@ import {Entity} from "redis-om";
 import {RedisRepositoryClient} from "@/lib/redis";
 import {Nullable} from "@/lib/utils";
 import {Application} from "@/data/types";
+import {ApplicationParityInterface} from "@/data/application/ApplicationParityInterface";
 
-class ApplicationRedisClient extends RedisRepositoryClient<Application> {
+class ApplicationRedisClient extends RedisRepositoryClient<Application> implements ApplicationParityInterface {
     constructor() {
         super('application', {
                 id: {
@@ -12,6 +13,18 @@ class ApplicationRedisClient extends RedisRepositoryClient<Application> {
                 },
                 userId: {
                     type: 'string'
+                },
+                createdAt: {
+                    type: 'date',
+                    sortable: true,
+                },
+                updatedAt: {
+                    type: 'date',
+                    sortable: true
+                },
+                state: {
+                    type: 'string',
+                    indexed: true
                 },
                 name: {
                     type: 'string',
@@ -26,18 +39,6 @@ class ApplicationRedisClient extends RedisRepositoryClient<Application> {
                 environmentIds: {
                     type: 'string[]'
                 },
-                createdAt: {
-                    type: 'date',
-                    sortable: true,
-                },
-                updatedAt: {
-                    type: 'date',
-                    sortable: true
-                },
-                state: {
-                    type: 'string',
-                    indexed: true
-                }
             }
         );
     }
@@ -73,7 +74,7 @@ class ApplicationRedisClient extends RedisRepositoryClient<Application> {
 
     public async deleteApplicationByIdAndUserId(id: string, userId: string): Promise<Nullable<Application>> {
         await this.waitForRedisIndexCreated();
-        const application= await this.getApplicationByIdAndUserId(id, userId);
+        const application = await this.getApplicationByIdAndUserId(id, userId);
         if (application === null) return null;
         if (application.environmentIds.length) return null;
         if (application.flagIds.length) return null;

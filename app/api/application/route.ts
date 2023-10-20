@@ -1,6 +1,6 @@
 import {auth} from "@clerk/nextjs";
 import {NextRequest, NextResponse} from "next/server";
-import applicationRepositoryClient from "@/data/redis/ApplicationRedisClient"
+import applicationRepositoryClient from "@/data/application/ApplicationRedisClient"
 
 export async function GET(req: NextRequest) {
     try {

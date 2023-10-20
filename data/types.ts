@@ -7,7 +7,7 @@ enum State {
     NEUTRAL = 'NEUTRAL'
 }
 
-type BaseDataType<T extends Object> = T & {
+export type BaseDataType<T extends Object> = T & {
     id: string;
     userId: string;
     createdAt: Date;
