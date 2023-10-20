@@ -1,6 +1,6 @@
 import {Nullable} from "@/lib/utils";
 
-enum State {
+export enum State {
     CREATE = 'CREATE',
     UPDATE = 'UPDATE',
     DELETE = 'DELETE',
@@ -13,6 +13,11 @@ export type BaseDataType<T extends Object> = T & {
     createdAt: Date;
     updatedAt: Date;
     state: State;
+}
+
+export interface BaseParityInterface<T> {
+    getEntitiesAtState(state: State): Promise<Nullable<T>[]>;
+    setEntitiesToNeutral(entities: T[]): Promise<void>;
 }
 
 export type Application = BaseDataType<{
