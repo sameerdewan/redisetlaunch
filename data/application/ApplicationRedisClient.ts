@@ -81,37 +81,6 @@ class ApplicationRedisClient extends RedisRepositoryClient<Application> implemen
         await this.repository.remove(id);
         return this.setId(application);
     }
-
-    public async getEntitiesAtState(state: State): Promise<Nullable<Application>[]> {
-        await this.waitForRedisIndexCreated();
-        const applications = await this.repository
-            .search()
-            .where('state')
-            .eq(state)
-            .return
-            .all() as Application[] ?? [];
-        return applications.map(this.setId);
-    }
-
-    public async setEntitiesToNeutral(applications: Application[]): Promise<void> {
-        await this.waitForRedisIndexCreated();
-        const entities = await this.repository
-            .search()
-            .where('id')
-            .containOneOf(...applications.map(application => application.id))
-            .return
-            .all();
-        const saveEntities: Promise<Entity>[] = [];
-        for (const entity of entities) {
-            entity.state = State.NEUTRAL;
-            saveEntities.push(this.repository.save(entity));
-        }
-        const results = await Promise.allSettled(saveEntities);
-        const errors = results.filter(r => r.status === 'rejected');
-        if (errors.length) {
-            console.log('Entities set to neutral errors', errors, JSON.stringify({errors}, null, 2));
-        }
-    }
 }
 
 declare global {

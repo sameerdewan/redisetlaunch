@@ -4,7 +4,6 @@ import Link from "next/link";
 import {URLs} from "@/lib/urls";
 import Image from "next/image";
 import {cn} from "@/lib/utils";
-import {Montserrat} from "next/font/google";
 import {
     AppWindow,
     LayoutDashboard, LifeBuoy,
@@ -13,9 +12,9 @@ import {
     Wallet
 } from "lucide-react";
 import {usePathname} from "next/navigation";
+import {Montserrat} from 'next/font/google';
 
 const montserrat = Montserrat({
-    weight: "600",
     subsets: ["latin"]
 });
 
@@ -58,18 +57,20 @@ const Sidebar: React.FC = () => {
 
     // Returned UI
     return (
-        <div className='space-y-4 py-4 flex flex-col h-full bg-gray-100 drop-shadow-xl text-zinc-800'>
+        <div className='space-y-4 py-4 flex flex-col h-full bg-[#ECECEE] drop-shadow-xl text-[#101B35]'>
             <div className='px-3 py-2 flex-1'>
-                <Link href={URLs.dashboard} className='flex items-center pl-3 mb-14'>
-                    <div className='relative w-12 h-12 mr-1'>
+                <Link href={URLs.dashboard} className='flex flex-col items-center justify-center mb-8'>
+                    <div className='relative w-40 h-40 -mb-9 z-10'>
                         <Image
                             fill
                             alt='Logo'
-                            src='/reactflags.svg'
+                            src='/logo.png'
                         />
                     </div>
-                    <h1 className={cn('text-2xl font-bold', montserrat.className)}>
-                        reactflags
+                    <h1 className={cn(montserrat.className, 'z-20')}>
+                        <span className='font-light text-xl text-[#101B35]'>ready</span>
+                        <span className='font-bold text-xl text-[#101B35]'>set</span>
+                        <span className='font-extrabold text-xl text-[#F0B166]'>launch</span>
                     </h1>
                 </Link>
                 <div className='space-y-1'>
@@ -77,10 +78,10 @@ const Sidebar: React.FC = () => {
                         <Link
                             href={route.href}
                             key={route.href}
-                            className={cn('text-zinc-800 text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-zinc-800 hover:bg-zinc-800/10 rounded-lg transition', pathname === route.href ? 'bg-zinc-800/10' : '')}
+                            className={cn('text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-zinc-800 hover:bg-[#A9B7DA]/50 rounded-lg transition', pathname === route.href ? 'bg-[#A9B7DA]/50' : '')}
                         >
-                            <div className='flex items-center flex-1'>
-                                <route.icon className='h-5 w-5 mr-3 text-zinc-800'/>
+                            <div className='flex items-center flex-1 text-[#101B35]'>
+                                <route.icon className='h-5 w-5 mr-3'/>
                                 {route.label}
                             </div>
                         </Link>

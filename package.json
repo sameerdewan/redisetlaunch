@@ -11,9 +11,12 @@
   "dependencies": {
     "@clerk/nextjs": "4.25.4",
     "@hookform/resolvers": "3.3.2",
+    "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dialog": "1.0.5",
     "@radix-ui/react-label": "2.0.2",
     "@radix-ui/react-slot": "1.0.2",
+    "@radix-ui/react-switch": "^1.0.3",
+    "@radix-ui/react-tabs": "^1.0.4",
     "@upstash/redis": "1.23.3",
     "axios": "1.5.1",
     "class-variance-authority": "0.7.0",

@@ -1,5 +1,7 @@
 import {createClient} from 'redis';
-import {EntityId, FieldDefinition, Repository, Schema} from "redis-om";
+import {Entity, EntityId, FieldDefinition, Repository, Schema} from "redis-om";
+import {Application, State} from "@/data/types";
+import {Nullable} from "@/lib/utils";
 
 declare global {
     var clientRedis: any;
@@ -61,6 +63,37 @@ export class RedisRepositoryClient<T> {
         // @ts-ignore
         obj.id = obj[EntityId];
         return obj;
+    }
+
+    public async getEntitiesAtState(state: State): Promise<Nullable<T>[]> {
+        await this.waitForRedisIndexCreated();
+        const applications = await this.repository
+            .search()
+            .where('state')
+            .eq(state)
+            .return
+            .all() as Application[] ?? [];
+        return applications.map(this.setId);
+    }
+
+    public async setEntitiesToNeutral(entities: T[]): Promise<void> {
+        await this.waitForRedisIndexCreated();
+        const entitiesToNeutralize = await this.repository
+            .search()
+            .where('id')
+            .containOneOf(...entities.map(entity => entity.id))
+            .return
+            .all();
+        const saveEntities: Promise<Entity>[] = [];
+        for (const entity of entitiesToNeutralize) {
+            entity.state = State.NEUTRAL;
+            saveEntities.push(this.repository.save(entity));
+        }
+        const results = await Promise.allSettled(saveEntities);
+        const errors = results.filter(r => r.status === 'rejected');
+        if (errors.length) {
+            console.log('Entities set to neutral errors', errors, JSON.stringify({errors}, null, 2));
+        }
     }
 }
 
