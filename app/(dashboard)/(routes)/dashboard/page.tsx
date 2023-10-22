@@ -1,13 +1,17 @@
 "use client";
 import React from "react";
-import {AppWindow, ArrowRight, Flag, GalleryHorizontalEnd, MoreVertical, Pin} from "lucide-react";
+import {AppWindow, ArrowDown, ArrowRight, Flag, GalleryHorizontalEnd, MoreVertical, Pin, Search} from "lucide-react";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import Heading from "@/components/Heading";
 import {Card} from "@/components/ui/card";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
 import {Button} from "@/components/ui/button";
+import {useRouter} from "next/navigation";
 
 const DashboardPage: React.FC = () => {
+    // Navigation
+    const router = useRouter();
+
     // Returned UI
     return (
         <div>
@@ -15,8 +19,8 @@ const DashboardPage: React.FC = () => {
                 title='Pinned'
                 description='List of all of your pinned pages.'
                 icon={Pin}
-                iconColor='text-[#101B35]'
-                bgColor='bg-[#A9B7DA]/50'
+                iconColor='text-zinc-800'
+                bgColor='bg-gray-200'
             />
             <div className='px-4 lg:px-8'>
                 <Tabs defaultValue="applications">
@@ -26,6 +30,11 @@ const DashboardPage: React.FC = () => {
                         <TabsTrigger value="flags">Flags</TabsTrigger>
                     </TabsList>
                     <TabsContent value="applications">
+                        <div className='border-gray-200 bg-white border-b-2 rounded-xl mb-4 p-3 flex'>
+                            <input className='bg-white focus-visible:outline-none flex-1'
+                                   placeholder='Search Applications...'/>
+                            <Search className='text-gray-400'/>
+                        </div>
                         <div className='grid xl:grid-cols-3 xl:gap-6 lg:grid-cols-2 lg:gap-4 sm:grid-cols-2 gap-4'>
                             {
                                 new Array(100).fill(null).map((obj) => (
@@ -49,7 +58,7 @@ const DashboardPage: React.FC = () => {
                                             <Button className='bg-[#A9B7DA] hover:bg-[#101B35]/50' size='sm'>
                                                 <MoreVertical/>
                                             </Button>
-                                            <Button className='bg-[#101B35]/50 hover:bg-[#101B35]/75' size='sm'>
+                                            <Button onClick={() => router.push('/applications/1')} className='bg-[#101B35]/50 hover:bg-[#101B35]/75' size='sm'>
                                                 Go to App
                                                 <ArrowRight/>
                                             </Button>
@@ -60,6 +69,11 @@ const DashboardPage: React.FC = () => {
                         </div>
                     </TabsContent>
                     <TabsContent value="environments">
+                        <div className='border-gray-200 bg-white border-b-2 rounded-xl mb-4 p-3 flex'>
+                            <input className='bg-white focus-visible:outline-none flex-1'
+                                   placeholder='Search Environments...'/>
+                            <Search className='text-gray-400'/>
+                        </div>
                         <div className='grid xl:grid-cols-3 xl:gap-6 lg:grid-cols-2 lg:gap-4 sm:grid-cols-2 gap-4'>
                             {
                                 new Array(100).fill(null).map((obj) => (
@@ -79,6 +93,14 @@ const DashboardPage: React.FC = () => {
                                                 </p>
                                             </div>
                                         </div>
+                                        <div className='h-7 flex pr-5 mb-3 justify-end'>
+                                            <Avatar className='bg-[#A9B7DA]/50 h-7 w-7'>
+                                                <AvatarFallback className='bg-[#A9B7DA]/50 text-[#101B35]'>
+                                                    <AppWindow className='h-4 w-4'/>
+                                                </AvatarFallback>
+                                            </Avatar>
+                                            <span className='text-muted-foreground text-sm pl-1 pt-1'>app name</span>
+                                        </div>
                                         <div className='bg-[#F0B166]/70 p-2 flex justify-between'>
                                             <Button className='bg-[#F0B166]/50 hover:bg-[#F0B166]' size='sm'>
                                                 <MoreVertical/>
@@ -94,6 +116,11 @@ const DashboardPage: React.FC = () => {
                         </div>
                     </TabsContent>
                     <TabsContent value="flags">
+                        <div className='border-gray-200 bg-white border-b-2 rounded-xl mb-4 p-3 flex'>
+                            <input className='bg-white focus-visible:outline-none flex-1'
+                                   placeholder='Search Flags...'/>
+                            <Search className='text-gray-400'/>
+                        </div>
                         <div className='grid xl:grid-cols-3 xl:gap-6 lg:grid-cols-2 lg:gap-4 sm:grid-cols-2 gap-4'>
                             {
                                 new Array(100).fill(null).map((obj) => (
@@ -112,6 +139,22 @@ const DashboardPage: React.FC = () => {
                                                     raindrops drop
                                                 </p>
                                             </div>
+                                        </div>
+                                        <div className='h-7 flex pr-5 mb-3 justify-end'>
+                                            <Avatar className='bg-[#A9B7DA]/50 h-7 w-7'>
+                                                <AvatarFallback className='bg-[#A9B7DA]/50 text-[#101B35]'>
+                                                    <AppWindow className='h-4 w-4'/>
+                                                </AvatarFallback>
+                                            </Avatar>
+                                            <span className='text-muted-foreground text-sm pl-1 pt-1'>app name</span>
+                                        </div>
+                                        <div className='h-7 flex pr-5 mb-3 justify-end'>
+                                            <Avatar className='bg-[#F0B166]/70 h-7 w-7'>
+                                                <AvatarFallback className='bg-[#F0B166]/70 text-orange-900'>
+                                                    <GalleryHorizontalEnd className='h-4 w-4'/>
+                                                </AvatarFallback>
+                                            </Avatar>
+                                            <span className='text-muted-foreground text-sm pl-1 pt-1'>env name</span>
                                         </div>
                                         <div className='bg-green-300 p-2 flex justify-between'>
                                             <Button className='bg-green-400 hover:bg-green-500' size='sm'>

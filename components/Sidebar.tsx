@@ -68,7 +68,7 @@ const Sidebar: React.FC = () => {
                         />
                     </div>
                     <h1 className={cn(montserrat.className, 'z-20')}>
-                        <span className='font-light text-xl text-[#101B35]'>ready</span>
+                        <span className='font-light text-xl text-[#101B35]'>redi</span>
                         <span className='font-bold text-xl text-[#101B35]'>set</span>
                         <span className='font-extrabold text-xl text-[#F0B166]'>launch</span>
                     </h1>
@@ -78,7 +78,7 @@ const Sidebar: React.FC = () => {
                         <Link
                             href={route.href}
                             key={route.href}
-                            className={cn('text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-zinc-800 hover:bg-[#A9B7DA]/50 rounded-lg transition', pathname === route.href ? 'bg-[#A9B7DA]/50' : '')}
+                            className={cn('text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-zinc-800 hover:bg-[#A9B7DA]/50 rounded-lg transition', pathname.includes(route.href) ? 'bg-[#A9B7DA]/50' : '')}
                         >
                             <div className='flex items-center flex-1 text-[#101B35]'>
                                 <route.icon className='h-5 w-5 mr-3'/>
