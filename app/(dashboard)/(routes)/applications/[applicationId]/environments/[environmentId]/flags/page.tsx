@@ -1,11 +1,26 @@
+"use client";
 import Heading from "@/components/Heading";
-import {AppWindow, ArrowRight, Braces, Flag, GalleryHorizontalEnd, MoreVertical, Plus, Search} from "lucide-react";
+import {
+    AppWindow,
+    ArrowRight,
+    Braces,
+    Clock,
+    Flag,
+    GalleryHorizontalEnd,
+    MoreVertical,
+    Plus,
+    Search, Split
+} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import React from "react";
 import {Card} from "@/components/ui/card";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
+import {useRouter} from 'next/navigation';
 
 function Flags() {
+    // Navigation
+    const router = useRouter();
+
     // Returned UI
     return (
         <div>
@@ -34,7 +49,8 @@ function Flags() {
                                                 <Flag/>
                                             </AvatarFallback>
                                         </Avatar>
-                                        <div className='h-3 w-3 bg-red-500 absolute -top-0 right-0 z-10 rounded-full' />
+                                        {/*<div className='h-3 w-3 bg-red-400 absolute -top-0 right-0 z-10 rounded-full' />*/}
+                                        <Clock className='h-4 w-4 bg-gray-200 absolute -top-0 -right-1 z-0 rounded-full'/>
                                     </div>
                                     <div className="flex-grow">
                                         <p className="font-bold">flag name</p>
@@ -68,11 +84,20 @@ function Flags() {
                                     </Avatar>
                                     <span className='w-20 text-muted-foreground text-sm pl-1 pt-1'>JSON</span>
                                 </div>
+                                <div className='h-7 flex pr-5 mb-3 justify-end'>
+                                    <Avatar className='bg-cyan-400 h-7 w-7'>
+                                        <AvatarFallback className='bg-cyan-400 text-cyan-800'>
+                                            <Split className='h-4 w-4'/>
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    <span className='w-20 text-muted-foreground text-sm pl-1 pt-1'>A/B</span>
+                                </div>
                                 <div className='bg-green-300 p-2 flex justify-between'>
                                     <Button className='bg-green-400 hover:bg-green-500' size='sm'>
                                         <MoreVertical/>
                                     </Button>
-                                    <Button className='bg-green-500 hover:bg-green-600' size='sm'>
+                                    <Button onClick={() => router.push(`/applications/1/environments/1/flags/1`)}
+                                            className='bg-green-500 hover:bg-green-600' size='sm'>
                                         Go to Flag
                                         <ArrowRight/>
                                     </Button>

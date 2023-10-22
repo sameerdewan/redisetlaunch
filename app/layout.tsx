@@ -4,6 +4,7 @@ import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
 import {ClerkProvider} from '@clerk/nextjs'
 import ScrollToTopButton from "@/components/ScrollToTopButton";
+import {cn} from "@/lib/utils";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -17,7 +18,7 @@ const RootLayout: React.FC<React.PropsWithChildren> = ({children}) => {
     return (
         <ClerkProvider>
             <html lang="en">
-            <body className={inter.className}>
+            <body className={cn(inter.className, 'bg-gray-50')}>
                 {children}
                 <ScrollToTopButton/>
             </body>
