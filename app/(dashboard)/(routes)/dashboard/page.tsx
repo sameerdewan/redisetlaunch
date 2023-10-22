@@ -1,6 +1,16 @@
 "use client";
 import React from "react";
-import {AppWindow, ArrowDown, ArrowRight, Flag, GalleryHorizontalEnd, MoreVertical, Pin, Search} from "lucide-react";
+import {
+    AppWindow,
+    ArrowDown,
+    ArrowRight,
+    Braces,
+    Flag,
+    GalleryHorizontalEnd,
+    MoreVertical,
+    Pin,
+    Search
+} from "lucide-react";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs";
 import Heading from "@/components/Heading";
 import {Card} from "@/components/ui/card";
@@ -99,7 +109,7 @@ const DashboardPage: React.FC = () => {
                                                     <AppWindow className='h-4 w-4'/>
                                                 </AvatarFallback>
                                             </Avatar>
-                                            <span className='text-muted-foreground text-sm pl-1 pt-1'>app name</span>
+                                            <span className='w-20 text-muted-foreground text-sm pl-1 pt-1'>app name</span>
                                         </div>
                                         <div className='bg-[#F0B166]/70 p-2 flex justify-between'>
                                             <Button className='bg-[#F0B166]/50 hover:bg-[#F0B166]' size='sm'>
@@ -127,11 +137,14 @@ const DashboardPage: React.FC = () => {
                                     <Card key={obj}
                                           className='flex flex-col justify-between'>
                                         <div className="flex items-center space-x-4 p-4">
-                                            <Avatar className='bg-green-100'>
-                                                <AvatarFallback className='bg-green-300 text-green-600'>
-                                                    <Flag/>
-                                                </AvatarFallback>
-                                            </Avatar>
+                                            <div className='relative z-40'>
+                                                <Avatar className='bg-green-100'>
+                                                    <AvatarFallback className='bg-green-300 text-green-600'>
+                                                        <Flag/>
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                                <div className='h-3 w-3 bg-red-500 absolute -top-0 right-0 z-10 rounded-full' />
+                                            </div>
                                             <div className="flex-grow">
                                                 <p className="font-bold">flag name</p>
                                                 <p className="text-muted-foreground text-sm">
@@ -146,7 +159,7 @@ const DashboardPage: React.FC = () => {
                                                     <AppWindow className='h-4 w-4'/>
                                                 </AvatarFallback>
                                             </Avatar>
-                                            <span className='text-muted-foreground text-sm pl-1 pt-1'>app name</span>
+                                            <span className='w-20 text-muted-foreground text-sm pl-1 pt-1'>app name</span>
                                         </div>
                                         <div className='h-7 flex pr-5 mb-3 justify-end'>
                                             <Avatar className='bg-[#F0B166]/70 h-7 w-7'>
@@ -154,7 +167,15 @@ const DashboardPage: React.FC = () => {
                                                     <GalleryHorizontalEnd className='h-4 w-4'/>
                                                 </AvatarFallback>
                                             </Avatar>
-                                            <span className='text-muted-foreground text-sm pl-1 pt-1'>env name</span>
+                                            <span className='w-20 text-muted-foreground text-sm pl-1 pt-1'>env name</span>
+                                        </div>
+                                        <div className='h-7 flex pr-5 mb-3 justify-end'>
+                                            <Avatar className='bg-gray-300 h-7 w-7'>
+                                                <AvatarFallback className='bg-gray-300 text-zinc-800'>
+                                                    <Braces className='h-4 w-4'/>
+                                                </AvatarFallback>
+                                            </Avatar>
+                                            <span className='w-20 text-muted-foreground text-sm pl-1 pt-1'>JSON</span>
                                         </div>
                                         <div className='bg-green-300 p-2 flex justify-between'>
                                             <Button className='bg-green-400 hover:bg-green-500' size='sm'>

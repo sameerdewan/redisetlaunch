@@ -1,3 +1,4 @@
+"use client";
 import {
     AppWindow,
     ArrowRight,
@@ -13,10 +14,16 @@ import React from "react";
 import {Card} from "@/components/ui/card";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
 import {Button} from "@/components/ui/button";
+import {useRouter} from "next/navigation";
 
-function Page() {
+
+function Page({params}: {params: {applicationId: string}}) {
+    // Navigation
+    const router = useRouter();
+
+    // Returned UI
     return (
-        <React.Fragment>
+        <div className='min-h-screen'>
             <Heading
                 title='app name'
                 description='ID:#123123MYID'
@@ -50,6 +57,7 @@ function Page() {
                     <div className='max-sm:flex max-sm:flex-col-reverse'>
                         <div className='grid lg:grid-cols-3 md:grid-cols-1 gap-4 mb-8'>
                             <Card
+                                onClick={() => router.push(`/applications/${params.applicationId}/environments`)}
                                 className='bg-[#F0B166]/20 border-orange-200 border-2 flex flex-col justify-center items-center text-center h-40 relative overflow-clip rounded-lg hover:shadow-md transition cursor-pointer'>
                                 <p className="font-bold text-2xl z-20">envs</p>
                                 <div className='text-xl font-bold z-20'>7</div>
@@ -100,7 +108,7 @@ function Page() {
                     </Button>
                 </Card>
             </div>
-        </React.Fragment>
+        </div>
     );
 }
 
