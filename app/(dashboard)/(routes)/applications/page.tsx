@@ -61,7 +61,7 @@ const ApplicationsPage: React.FC = () => {
             <div className='px-4 lg:px-8'>
                 <div className='border-gray-200 bg-white border-b-2 rounded-xl mb-4 p-3 flex'>
                     <input className='bg-white focus-visible:outline-none flex-1'
-                           placeholder='Search Applications...'/>
+                           placeholder='PageSearch Applications...'/>
                     <Search className='text-gray-400'/>
                 </div>
                 <div className='grid xl:grid-cols-3 xl:gap-6 lg:grid-cols-2 lg:gap-4 sm:grid-cols-2 gap-4'>

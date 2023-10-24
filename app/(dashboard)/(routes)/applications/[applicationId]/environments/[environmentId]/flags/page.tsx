@@ -34,7 +34,7 @@ function Flags() {
             <section className='px-4 lg:px-8'>
                 <div className='border-gray-200 bg-white border-b-2 rounded-xl mb-4 p-3 flex'>
                     <input className='bg-white focus-visible:outline-none flex-1'
-                           placeholder='Search Flags...'/>
+                           placeholder='PageSearch Flags...'/>
                     <Search className='text-gray-400'/>
                 </div>
                 <div className='grid xl:grid-cols-3 xl:gap-6 lg:grid-cols-2 lg:gap-4 sm:grid-cols-2 gap-4'>
@@ -51,6 +51,7 @@ function Flags() {
                                         </Avatar>
                                         {/*<div className='h-3 w-3 bg-red-400 absolute -top-0 right-0 z-10 rounded-full' />*/}
                                         <Clock className='h-4 w-4 bg-gray-200 absolute -top-0 -right-1 z-0 rounded-full'/>
+                                        <Clock className='animate-ping h-4 w-4 bg-gray-200 absolute -top-0 -right-1 z-0 rounded-full'/>
                                     </div>
                                     <div className="flex-grow">
                                         <p className="font-bold">flag name</p>

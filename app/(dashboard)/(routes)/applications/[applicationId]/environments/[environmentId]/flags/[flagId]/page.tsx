@@ -9,7 +9,7 @@ import {
     Pencil,
     PinOff,
     RefreshCw,
-    Trash
+    Trash, Video
 } from "lucide-react";
 import React from "react";
 import {Card} from "@/components/ui/card";
@@ -49,6 +49,7 @@ function FlagPage({params}: {params: {environmentId: string}}) {
                                 const location = document.getElementById('location')!
                                 const image = document.createElement('img');
                                 image.src = canvas.toDataURL('image/jpeg');
+                                image.width = 800;
                                 location.appendChild(image);
                             })}
                             className='max-sm:hidden bg-white text-red-400 border-red-400 border-2 hover:bg-red-500 hover:border-red-500 hover:text-white'>
@@ -88,10 +89,11 @@ function FlagPage({params}: {params: {environmentId: string}}) {
                                 <GalleryHorizontalEnd className='absolute h-44 w-44 left-0 top-4 text-[#F0B166]/50 z-10'/>
                             </Card>
                             <Card
-                                className='flex flex-col justify-center items-center text-center h-40 relative overflow-clip rounded-lg'>
-                                <p className="font-bold text-2xl z-20">last updated</p>
-                                <div className='text-xl font-bold z-20'>02/16/2016</div>
-                                <CalendarDaysIcon className='absolute h-44 w-44 left-4 top-2 text-gray-200 z-10'/>
+                                onClick={() => router.push(`/applications/1/environments/${params.environmentId}/sessions`)}
+                                className='bg-pink-200 border-pink-600 flex flex-col justify-center items-center text-center h-40 relative overflow-clip rounded-lg hover:shadow-md transition cursor-pointer'>
+                                <p className="font-bold text-2xl z-20">sessions</p>
+                                <div className='text-xl font-bold z-20'>42</div>
+                                <Video className='absolute h-52 w-52 left-4 top-1 text-pink-400 z-10'/>
                             </Card>
                         </div>
                         <div className='max-sm:mb-8'>
@@ -152,6 +154,19 @@ function FlagPage({params}: {params: {environmentId: string}}) {
                         </div>
                     </div>
                     <Button
+                        onClick={() => html2canvas(document.body, {
+                            x: window.scrollX,
+                            y: window.scrollY,
+                            width: window.innerWidth,
+                            height: window.innerHeight,
+                        }).then(canvas => {
+                            const location = document.getElementById('location')!
+                            const image = document.createElement('img');
+                            image.src = canvas.toDataURL('image/jpeg');
+                            image.width = 800;
+                            image.height = 400;
+                            location.appendChild(image);
+                        })}
                         className='sm:visible md:hidden bg-white text-red-400 border-red-400 border-2 hover:bg-red-500 hover:border-red-500 hover:text-white w-full my-8'>
                         <Trash/>&nbsp;Delete Application
                     </Button>

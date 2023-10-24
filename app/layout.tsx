@@ -9,8 +9,8 @@ import {cn} from "@/lib/utils";
 const inter = Inter({subsets: ['latin']})
 
 export const metadata: Metadata = {
-    title: 'reactflags',
-    description: 'Feature flagging made cheap and easy',
+    title: 'RediSetLaunch',
+    description: 'empower your team',
 }
 
 const RootLayout: React.FC<React.PropsWithChildren> = ({children}) => {
