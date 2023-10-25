@@ -49,3 +49,21 @@ export const ApplicationEntityColors: EntityCardColors = {
   PRIMARY_BACKGROUND: "bg-[#101B35]/50",
   PRIMARY_BACKGROUND_HOVER: "bg-[#101B35]/75"
 };
+
+export const EnvironmentEntityColors: EntityCardColors = {
+  BACKGROUND: "bg-[#F0B166]/70",
+  TEXT: "text-orange-900",
+  SECONDARY_BACKGROUND: "bg-[#F0B166]/50",
+  SECONDARY_BACKGROUND_HOVER: "bg-[#F0B166]",
+  PRIMARY_BACKGROUND: "bg-[#F0B166]/60",
+  PRIMARY_BACKGROUND_HOVER: "bg-[#F0B166]"
+};
+
+export const FlagEntityColors: EntityCardColors = {
+  BACKGROUND: "bg-green-300",
+  TEXT: "text-green-600",
+  SECONDARY_BACKGROUND: "bg-green-400",
+  SECONDARY_BACKGROUND_HOVER: "bg-green-500",
+  PRIMARY_BACKGROUND: "bg-green-500",
+  PRIMARY_BACKGROUND_HOVER: "bg-green-600"
+}
