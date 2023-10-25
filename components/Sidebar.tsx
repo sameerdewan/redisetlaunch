@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import {URLs} from "@/lib/urls";
 import Image from "next/image";
-import {cn} from "@/lib/utils";
+import {cn, getAbsoluteDashboardPath, removeQueryParameters} from "@/lib/utils";
 import {
     AppWindow,
     LayoutDashboard, LifeBuoy,
@@ -77,7 +77,7 @@ const Sidebar: React.FC = () => {
                         <Link
                             href={route.href}
                             key={route.href}
-                            className={cn('text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-zinc-800 hover:bg-[#101B35]/20 rounded-lg transition', pathname.includes(route.href) ? 'bg-[#101B35]/20' : '')}
+                            className={cn('text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-zinc-800 hover:bg-[#101B35]/20 rounded-lg transition', getAbsoluteDashboardPath(pathname) === route.href ? 'bg-[#101B35]/20' : '')}
                         >
                             <div className='flex items-center flex-1 text-[#101B35]'>
                                 <route.icon className='h-5 w-5 mr-3'/>

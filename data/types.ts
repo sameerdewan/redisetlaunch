@@ -9,14 +9,30 @@ export enum State {
 
 export type BaseDataType<T extends Object> = T & {
     id: string;
+    name: string;
+    description: string;
     userId: string;
     createdAt: Date;
     updatedAt: Date;
-    state: State;
+}
+
+export type BaseEntity = {
+    organizationId: string;
+    id: string;
+    name: string;
+    description: string;
+    createdAt: Date;
+    createdByName: string;
+    createdById: string;
+    updatedAt: Date;
+    updatedByName?: string;
+    updatedById?: string;
+    pinned: boolean;
 }
 
 export interface BaseParityInterface<T> {
     getEntitiesAtState(state: State): Promise<Nullable<T>[]>;
+
     setEntitiesToNeutral(entities: T[]): Promise<void>;
 }
 

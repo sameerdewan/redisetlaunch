@@ -1,15 +1,16 @@
 "use client";
 import Heading from "@/components/Heading";
 import {AppWindow} from "lucide-react";
-import React, {Suspense, useCallback, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {ApplicationEntityColors} from "@/lib/utils";
 import PageSearch from "@/components/PageSearch";
 import EntityGrid from "@/components/EntityGrid";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
+import {Page, PageContent} from "@/components/Page";
 
 export default function Applications() {
     // State
-    const [data, setData] = useState();
+    const [apps, setApps] = useState([]);
     const [loading, setLoading] = useState<boolean>(false);
 
     // Navigation
@@ -33,11 +34,12 @@ export default function Applications() {
     const query = async () => {
         setLoading(true);
         const data = await new Promise(resolve => setTimeout(() => {
-            resolve({
-                randomNumber: Math.random()
-            });
+            resolve(new Array(100).fill({
+                name: "app name",
+                description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like"
+            }));
         }, 1000));
-        setData(data as any);
+        setApps(data as any);
         setLoading(false);
     }
 
@@ -49,7 +51,7 @@ export default function Applications() {
 
     // User Interface
     return (
-        <div>
+        <Page>
             <Heading
                 title="Applications"
                 description="List of all of your applications."
@@ -57,7 +59,7 @@ export default function Applications() {
                 iconColor={ApplicationEntityColors.TEXT}
                 bgColor={ApplicationEntityColors.BACKGROUND}
             />
-            <div className="px-4 lg:px-8">
+            <PageContent>
                 <PageSearch
                     ref={searchRef}
                     inputProps={{
@@ -65,8 +67,18 @@ export default function Applications() {
                     }}
                     onSearch={navigateToQuery}
                 />
-                <EntityGrid loading={loading} entities={data ?? []}/>
-            </div>
-        </div>
+                <EntityGrid
+                    loading={loading}
+                    entities={apps ?? []}
+                    entityCardColors={ApplicationEntityColors}
+                    icon={AppWindow}
+                    type="App"
+                    goToEntity={{
+                        main: (id: string) => router.push(`/dashboard/apps/${id}`),
+                        edit: (id: string) => router.push(`/dashboard/apps/${id}/edit`)
+                    }}
+                />
+            </PageContent>
+        </Page>
     );
 }

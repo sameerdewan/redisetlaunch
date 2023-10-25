@@ -3,7 +3,7 @@ export const URLs = {
     signUp: '/sign-up',
     landing: '/',
     dashboard: '/dashboard',
-    applications: '/applications',
+    applications: '/dashboard/apps',
     documentation: '/documentation',
     billing: '/billing',
     support: '/support',
