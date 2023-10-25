@@ -9,8 +9,8 @@ import {usePathname, useRouter, useSearchParams} from "next/navigation";
 
 export default function Applications() {
     // State
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState<boolean>(true);
+    const [data, setData] = useState();
+    const [loading, setLoading] = useState<boolean>(false);
 
     // Navigation
     const router = useRouter();
@@ -22,28 +22,30 @@ export default function Applications() {
     const searchRef = useRef<HTMLInputElement>(null);
 
     // Methods
-    const fetchAndNavigate = async (url: string) => {
-        setLoading(true);
-        if (url && url !== pathname) {
-            router.push(`/dashboard/apps?dataUrl=${url}`);
+    const navigateToQuery = () => {
+        if (searchRef?.current?.value && searchRef?.current?.value !== pathname) {
+            router.push(`/dashboard/apps/?dataUrl=${searchRef?.current?.value}`);
         } else if (pathname !== "/dashboard/apps") {
-            router.push("/dashboard/apps");
+            router.push("/dashboard/apps")
         }
-        const res = await fetch(url ?? "https://dummyjson.com/products/1");
-        const fetchedData = await res.json();
-        setData(fetchedData);
-        setLoading(false);
-    };
+    }
 
-    const search = async () => {
-        const url = searchRef?.current?.value!;
-        await fetchAndNavigate(url);
-    };
+    const query = async () => {
+        setLoading(true);
+        const data = await new Promise(resolve => setTimeout(() => {
+            resolve({
+                randomNumber: Math.random()
+            });
+        }, 1000));
+        setData(data as any);
+        setLoading(false);
+    }
+
 
     // Effects
     useEffect(() => {
-        fetchAndNavigate(dataUrl).finally();
-    }, [dataUrl, pathname, router]); // eslint-disable-line
+        query().finally();
+    }, [dataUrl]);
 
     // User Interface
     return (
@@ -61,7 +63,7 @@ export default function Applications() {
                     inputProps={{
                         placeholder: "Search Applications..."
                     }}
-                    onSearch={search}
+                    onSearch={navigateToQuery}
                 />
                 <EntityGrid loading={loading} entities={data ?? []}/>
             </div>
