@@ -1,7 +1,8 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import {ChangeEvent} from "react";
- 
+import { LucideIcon } from "lucide-react";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
@@ -39,6 +40,13 @@ export interface EntityCardColors {
   SECONDARY_BACKGROUND_HOVER: string;
   PRIMARY_BACKGROUND: string;
   PRIMARY_BACKGROUND_HOVER: string;
+}
+
+export interface EntityAttribute {
+  icon: LucideIcon;
+  value: string;
+  bgTwClass: string;
+  textTwClass: string;
 }
 
 export const ApplicationEntityColors: EntityCardColors = {

@@ -2,10 +2,10 @@ import React from "react";
 import Spinner from "@/components/Spinner";
 import {Card} from "@/components/ui/card";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
-import {ArrowRight, EditIcon, LucideIcon, MoreVertical, Pin} from "lucide-react";
+import {AlarmClock, ArrowRight, EditIcon, LucideIcon, MoreVertical, Pin} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {BaseEntity} from "@/data/types";
-import {EntityCardColors, truncate} from "@/lib/utils";
+import {EntityAttribute, EntityCardColors, truncate} from "@/lib/utils";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 
 type EntityGridProps = {
@@ -16,6 +16,7 @@ type EntityGridProps = {
     };
     icon: LucideIcon;
     entityCardColors: EntityCardColors;
+    entityAttributes?: EntityAttribute[];
     loading: boolean;
     type: string;
 }
@@ -44,6 +45,18 @@ export default function EntityGrid(props: EntityGridProps) {
                                 </p>
                             </div>
                         </div>
+                        {props.entityAttributes?.map(entityAttribute => (
+                            <div key={entityAttribute.value} className='h-7 flex mb-3 justify-end'>
+                                <Avatar className={`${entityAttribute.bgTwClass} h-7 w-7`}>
+                                    <AvatarFallback className={`${entityAttribute.bgTwClass} ${entityAttribute.textTwClass}`}>
+                                        <entityAttribute.icon className='h-4 w-4'/>
+                                    </AvatarFallback>
+                                </Avatar>
+                                <span className="w-24 text-muted-foreground text-sm pl-1 pt-1">
+                                    {truncate(entityAttribute.value, 10)}
+                                </span>
+                            </div>
+                        ))}
                         <div className={`${props.entityCardColors.BACKGROUND} p-2 flex justify-between`}>
                             <DropdownMenu dir="rtl">
                                 <DropdownMenuTrigger>
