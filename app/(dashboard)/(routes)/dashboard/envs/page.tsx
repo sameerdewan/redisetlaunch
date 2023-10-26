@@ -6,7 +6,7 @@ import {ApplicationEntityColors, EnvironmentEntityColors, FlagEntityColors, Sess
 import PageSearch from "@/components/PageSearch";
 import EntityGrid from "@/components/EntityGrid";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
-import {Page, PageContent} from "@/components/Page";
+import {EntityAddButton, Page, PageContent} from "@/components/Page";
 import Tag from "@/components/Tag";
 
 export default function Environments() {
@@ -157,6 +157,7 @@ export default function Environments() {
                     ]}
                 />
             </PageContent>
+            <EntityAddButton />
         </Page>
     );
 }

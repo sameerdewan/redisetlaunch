@@ -1,8 +1,8 @@
 "use client";
 import React from "react";
 import {Card} from "@/components/ui/card";
-import {Button} from "@/components/ui/button";
-import {LucideIcon, Pencil, PinOff, RefreshCw, Trash} from "lucide-react";
+import {Button, ButtonProps} from "@/components/ui/button";
+import {LucideIcon, Pencil, PinOff, Plus, RefreshCw, Trash} from "lucide-react";
 import Spinner from "@/components/Spinner";
 
 export function Page(props: React.PropsWithChildren) {
@@ -118,5 +118,18 @@ export function EntityValue(props: {value: any}) {
     // User Interface
     return (
         <p className="text-muted-foreground">{props.value}</p>
+    );
+}
+
+export function EntityAddButton(props: ButtonProps) {
+    // User Interface
+    return (
+        <Button
+            {...props}
+            className='fixed top-1/2 right-5 bg-green-600 rounded-full h-[70px] w-[70px] hover:bg-green-700 bg-opacity-80'
+            size='icon'
+        >
+            <Plus className='h-8 w-8'/>
+        </Button>
     );
 }
