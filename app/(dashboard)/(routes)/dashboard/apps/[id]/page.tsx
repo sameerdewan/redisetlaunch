@@ -11,7 +11,7 @@ import {
 } from "@/components/Page";
 import Heading from "@/components/Heading";
 import {AppWindow, CalendarDaysIcon, Flag, GalleryHorizontalEnd} from "lucide-react";
-import {ApplicationEntityColors, EnvironmentEntityColors, FlagEntityColors} from "@/lib/utils";
+import {ApplicationEntityColors, EnvironmentEntityColors} from "@/lib/utils";
 import {useRouter} from "next/navigation";
 
 export default function Application(props: { params: { id: string } }) {
@@ -53,7 +53,7 @@ export default function Application(props: { params: { id: string } }) {
                         borderTwClass="border-orange-300"
                         iconColorTextTwClass="text-orange-300"
                         positioningTwClasses="left-4 top-1"
-                        onClick={() => {}}
+                        onClick={() => router.push(`/dashboard/envs?applicationId=${props.params.id}`)}
                     />
                     <EntityCallout
                         title="flags"
@@ -63,7 +63,7 @@ export default function Application(props: { params: { id: string } }) {
                         borderTwClass="border-green-400"
                         iconColorTextTwClass="text-green-400"
                         positioningTwClasses="left-4 top-1"
-                        onClick={() => {}}
+                        onClick={() => router.push(`/dashboard/flags?applicationId=${props.params.id}`)}
                     />
                     <EntityCallout
                         title="last updated"

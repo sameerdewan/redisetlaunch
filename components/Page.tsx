@@ -39,6 +39,7 @@ export function EntityCallout(props: {
     // User Interface
     return (
         <Card
+            onClick={props.onClick}
             className={`${props.backgroundTwClass} ${props.borderTwClass} border-2 flex flex-col justify-center items-center text-center h-40 relative overflow-clip rounded-lg ${typeof props.onClick === "function" ? "cursor-pointer hover:shadow-md transition" : ""}`}>
             <p className="font-bold text-2xl z-20">{props.title}</p>
             <div className='text-xl font-bold z-20'>{props.value}</div>
