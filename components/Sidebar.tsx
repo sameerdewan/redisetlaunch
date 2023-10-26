@@ -3,13 +3,10 @@ import React from "react";
 import Link from "next/link";
 import {URLs} from "@/lib/urls";
 import Image from "next/image";
-import {cn, getAbsoluteDashboardPath, removeQueryParameters} from "@/lib/utils";
+import {cn, getAbsoluteDashboardPath} from "@/lib/utils";
 import {
-    AppWindow,
-    LayoutDashboard, LifeBuoy,
-    ScrollText,
-    Settings,
-    Wallet
+    AppWindow, Flag, GalleryHorizontalEnd,
+    LayoutDashboard, Video
 } from "lucide-react";
 import {usePathname} from "next/navigation";
 import localFont from "next/font/local";
@@ -28,25 +25,20 @@ const routes = [
         href: URLs.applications,
     },
     {
-        label: 'Documentation',
-        icon: ScrollText,
-        href: URLs.documentation,
+        label: 'Environments',
+        icon: GalleryHorizontalEnd,
+        href: URLs.environments,
     },
     {
-        label: 'Billing',
-        icon: Wallet,
-        href: URLs.billing,
+        label: 'Flags',
+        icon: Flag,
+        href: URLs.flags,
     },
     {
-        label: 'Support',
-        icon: LifeBuoy,
-        href: URLs.support
+        label: 'Sessions',
+        icon: Video,
+        href: URLs.sessions
     },
-    {
-        label: 'Settings',
-        icon: Settings,
-        href: URLs.settings,
-    }
 ];
 
 const Sidebar: React.FC = () => {
@@ -70,7 +62,8 @@ const Sidebar: React.FC = () => {
                         <span className='font-bold text-xl text-[#101B35]'>Set</span>
                         <span className='font-extrabold text-xl text-[#101B35]/60'>Launch</span>
                     </h1>
-                    <h2 className={cn(cheGuevaraBarryBrown.className, 'text-sm text-[#101B35]/60 -mt-1')}>empower your team</h2>
+                    <h2 className={cn(cheGuevaraBarryBrown.className, 'text-sm text-[#101B35]/60 -mt-1')}>empower your
+                        team</h2>
                 </Link>
                 <div className='space-y-1'>
                     {routes.map(route => (
