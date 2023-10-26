@@ -31,11 +31,13 @@ export default function EntityGrid(props: EntityGridProps) {
             {
                 props.entities.map((entity) => (
                     <Card key={Math.random()}
-                          className='flex flex-col justify-between'>
+                          className='flex flex-col'
+                    >
                         <div className="flex items-center space-x-4 p-4">
                             <Avatar className={props.entityCardColors.BACKGROUND}>
-                                <AvatarFallback className={`${props.entityCardColors.BACKGROUND} ${props.entityCardColors.TEXT}`}>
-                                    {<props.icon />}
+                                <AvatarFallback
+                                    className={`${props.entityCardColors.BACKGROUND} ${props.entityCardColors.TEXT}`}>
+                                    {<props.icon/>}
                                 </AvatarFallback>
                             </Avatar>
                             <div className="flex-grow">
@@ -45,22 +47,29 @@ export default function EntityGrid(props: EntityGridProps) {
                                 </p>
                             </div>
                         </div>
-                        {props.entityAttributes?.map(entityAttribute => (
-                            <div key={entityAttribute.value} className='h-7 flex mb-3 justify-end'>
-                                <Avatar className={`${entityAttribute.bgTwClass} h-7 w-7`}>
-                                    <AvatarFallback className={`${entityAttribute.bgTwClass} ${entityAttribute.textTwClass}`}>
-                                        <entityAttribute.icon className='h-4 w-4'/>
-                                    </AvatarFallback>
-                                </Avatar>
-                                <span className="w-24 text-muted-foreground text-sm pl-1 pt-1">
-                                    {truncate(entityAttribute.value, 10)}
-                                </span>
-                            </div>
-                        ))}
+                        <section className="grid grid-cols-2 pl-5">
+                            {props.entityAttributes?.map((entityAttribute, i) => (
+                                <div key={entityAttribute.value} className="flex w-full">
+                                    <div className="self-center h-7 flex mb-3 items-center">
+                                        <Avatar className={`${entityAttribute.bgTwClass} h-7 w-7`}>
+                                            <AvatarFallback
+                                                className={`${entityAttribute.bgTwClass} ${entityAttribute.textTwClass}`}>
+                                                <entityAttribute.icon className='h-4 w-4'/>
+                                            </AvatarFallback>
+                                        </Avatar>
+                                        <span className="w-24 text-muted-foreground text-sm pl-1 pt-1">
+                                            {truncate(entityAttribute.value, 10)}
+                                        </span>
+                                    </div>
+                                </div>
+                            ))}
+                        </section>
                         <div className={`${props.entityCardColors.BACKGROUND} p-2 flex justify-between`}>
                             <DropdownMenu dir="rtl">
                                 <DropdownMenuTrigger>
-                                    <Button className={`${props.entityCardColors.SECONDARY_BACKGROUND} hover:${props.entityCardColors.PRIMARY_BACKGROUND}`} size='sm'>
+                                    <Button
+                                        className={`${props.entityCardColors.SECONDARY_BACKGROUND} hover:${props.entityCardColors.PRIMARY_BACKGROUND}`}
+                                        size='sm'>
                                         <MoreVertical/>
                                     </Button>
                                 </DropdownMenuTrigger>
@@ -74,7 +83,8 @@ export default function EntityGrid(props: EntityGridProps) {
                                 </DropdownMenuContent>
                             </DropdownMenu>
                             <Button onClick={() => props.goToEntity.main(entity.id)}
-                                    className={`${props.entityCardColors.PRIMARY_BACKGROUND} hover:${props.entityCardColors.PRIMARY_BACKGROUND_HOVER}`} size='sm'>
+                                    className={`${props.entityCardColors.PRIMARY_BACKGROUND} hover:${props.entityCardColors.PRIMARY_BACKGROUND_HOVER}`}
+                                    size='sm'>
                                 Go to {props.type}
                                 <ArrowRight/>
                             </Button>
