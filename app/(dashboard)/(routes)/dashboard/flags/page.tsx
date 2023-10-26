@@ -1,16 +1,16 @@
 "use client";
 import Heading from "@/components/Heading";
-import {GalleryHorizontalEnd} from "lucide-react";
+import {Flag} from "lucide-react";
 import React, {useEffect, useRef, useState} from "react";
-import {EnvironmentEntityColors} from "@/lib/utils";
+import {FlagEntityColors} from "@/lib/utils";
 import PageSearch from "@/components/PageSearch";
 import EntityGrid from "@/components/EntityGrid";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import {Page, PageContent} from "@/components/Page";
 
-export default function Environments() {
+export default function Flags() {
     // State
-    const [envs, setEnvs] = useState([]);
+    const [flags, setFlags] = useState([]);
     const [loading, setLoading] = useState<boolean>(false);
 
     // Navigation
@@ -25,9 +25,9 @@ export default function Environments() {
     // Methods
     const navigateToQuery = () => {
         if (searchRef?.current?.value && searchRef?.current?.value !== pathname) {
-            router.push(`/dashboard/envs/?dataUrl=${searchRef?.current?.value}`);
-        } else if (pathname !== "/dashboard/envs") {
-            router.push("/dashboard/envs")
+            router.push(`/dashboard/flags/?dataUrl=${searchRef?.current?.value}`);
+        } else if (pathname !== "/dashboard/flags") {
+            router.push("/dashboard/flags")
         }
     }
 
@@ -36,11 +36,11 @@ export default function Environments() {
         const data = await new Promise(resolve => setTimeout(() => {
             resolve(new Array(100).fill({
                 id: Math.floor(Math.random()).toString(),
-                name: "env name",
+                name: "flag name",
                 description: "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like"
             }));
         }, 1000));
-        setEnvs(data as any);
+        setFlags(data as any);
         setLoading(false);
     }
 
@@ -54,29 +54,29 @@ export default function Environments() {
     return (
         <Page>
             <Heading
-                title="Environments"
-                description="List of all of your environments."
-                icon={GalleryHorizontalEnd}
-                iconColor={EnvironmentEntityColors.TEXT}
-                bgColor={EnvironmentEntityColors.BACKGROUND}
+                title="Flags"
+                description="List of all of your flags."
+                icon={Flag}
+                iconColor={FlagEntityColors.TEXT}
+                bgColor={FlagEntityColors.BACKGROUND}
             />
             <PageContent>
                 <PageSearch
                     ref={searchRef}
                     inputProps={{
-                        placeholder: "Search Environments..."
+                        placeholder: "Search Flags..."
                     }}
                     onSearch={navigateToQuery}
                 />
                 <EntityGrid
                     loading={loading}
-                    entities={envs ?? []}
-                    entityCardColors={EnvironmentEntityColors}
-                    icon={GalleryHorizontalEnd}
-                    type="Env"
+                    entities={flags ?? []}
+                    entityCardColors={FlagEntityColors}
+                    icon={Flag}
+                    type="Flag"
                     goToEntity={{
-                        main: (id: string) => router.push(`/dashboard/envs/${id}`),
-                        edit: (id: string) => router.push(`/dashboard/envs/${id}/edit`)
+                        main: (id: string) => router.push(`/dashboard/flags/${id}`),
+                        edit: (id: string) => router.push(`/dashboard/flags/${id}/edit`)
                     }}
                 />
             </PageContent>
