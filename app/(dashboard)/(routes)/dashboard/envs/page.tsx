@@ -1,6 +1,6 @@
 "use client";
 import Heading from "@/components/Heading";
-import {AppWindow, Flag, GalleryHorizontalEnd, Video} from "lucide-react";
+import {AlarmClock, AppWindow, Braces, Flag, GalleryHorizontalEnd, Video} from "lucide-react";
 import React, {useEffect, useRef, useState} from "react";
 import {ApplicationEntityColors, EnvironmentEntityColors, FlagEntityColors, SessionEntityColors} from "@/lib/utils";
 import PageSearch from "@/components/PageSearch";
@@ -117,6 +117,44 @@ export default function Environments() {
                         main: (id: string) => router.push(`/dashboard/envs/${id}`),
                         edit: (id: string) => router.push(`/dashboard/envs/${id}/edit`)
                     }}
+                    entityAttributes={[
+                        {
+                            icon: AppWindow,
+                            value: "dsadadasdadsadasda",
+                            textTwClass: ApplicationEntityColors.TEXT,
+                            bgTwClass: ApplicationEntityColors.BACKGROUND,
+                        },
+                        {
+                            icon: GalleryHorizontalEnd,
+                            value: "dsadadasdadsadasda",
+                            textTwClass: EnvironmentEntityColors.TEXT,
+                            bgTwClass: EnvironmentEntityColors.BACKGROUND,
+                        },
+                        {
+                            icon: Flag,
+                            value: "dsadadasdadsadasda",
+                            textTwClass: "text-green-900",
+                            bgTwClass: FlagEntityColors.BACKGROUND,
+                        },
+                        {
+                            icon: Video,
+                            value: "dsadadasdadsadasda",
+                            textTwClass: SessionEntityColors.TEXT,
+                            bgTwClass: SessionEntityColors.BACKGROUND,
+                        },
+                        {
+                            icon: AlarmClock,
+                            value: "dsadadasdadsadasda",
+                            textTwClass: "text-cyan-800",
+                            bgTwClass: "bg-cyan-300",
+                        },
+                        {
+                            icon: Braces,
+                            value: "dsadadasdadsadasda",
+                            textTwClass: "text-zinc-700",
+                            bgTwClass: "bg-zinc-200",
+                        }
+                    ]}
                 />
             </PageContent>
         </Page>
