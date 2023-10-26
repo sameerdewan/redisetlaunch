@@ -1,12 +1,13 @@
 "use client";
 import Heading from "@/components/Heading";
-import {GalleryHorizontalEnd} from "lucide-react";
+import {AppWindow, Flag, GalleryHorizontalEnd, Video} from "lucide-react";
 import React, {useEffect, useRef, useState} from "react";
-import {EnvironmentEntityColors} from "@/lib/utils";
+import {ApplicationEntityColors, EnvironmentEntityColors, FlagEntityColors, SessionEntityColors} from "@/lib/utils";
 import PageSearch from "@/components/PageSearch";
 import EntityGrid from "@/components/EntityGrid";
 import {usePathname, useRouter, useSearchParams} from "next/navigation";
 import {Page, PageContent} from "@/components/Page";
+import Tag from "@/components/Tag";
 
 export default function Environments() {
     // State
@@ -61,6 +62,44 @@ export default function Environments() {
                 bgColor={EnvironmentEntityColors.BACKGROUND}
             />
             <PageContent>
+                <section className="mb-3 flex flex-wrap">
+                    <Tag
+                        icon={AppWindow}
+                        label="ID#13213123131"
+                        onRemove={() => {
+                        }}
+                        textTwClass={ApplicationEntityColors.TEXT}
+                        bgTwClass={ApplicationEntityColors.BACKGROUND}
+                        hoverBgTwClass={ApplicationEntityColors.SECONDARY_BACKGROUND_HOVER}
+                    />
+                    <Tag
+                        icon={GalleryHorizontalEnd}
+                        label="ID#13213123131"
+                        onRemove={() => {
+                        }}
+                        textTwClass={EnvironmentEntityColors.TEXT}
+                        bgTwClass={EnvironmentEntityColors.SECONDARY_BACKGROUND}
+                        hoverBgTwClass={EnvironmentEntityColors.SECONDARY_BACKGROUND_HOVER}
+                    />
+                    <Tag
+                        icon={Flag}
+                        label="ID#13213123131"
+                        onRemove={() => {
+                        }}
+                        textTwClass="text-green-900"
+                        bgTwClass={FlagEntityColors.BACKGROUND}
+                        hoverBgTwClass={FlagEntityColors.SECONDARY_BACKGROUND_HOVER}
+                    />
+                    <Tag
+                        icon={Video}
+                        label="ID#13213123131"
+                        onRemove={() => {
+                        }}
+                        textTwClass={SessionEntityColors.TEXT}
+                        bgTwClass="bg-pink-200"
+                        hoverBgTwClass={SessionEntityColors.SECONDARY_BACKGROUND_HOVER}
+                    />
+                </section>
                 <PageSearch
                     ref={searchRef}
                     inputProps={{
