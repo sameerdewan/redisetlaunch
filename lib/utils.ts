@@ -67,3 +67,12 @@ export const FlagEntityColors: EntityCardColors = {
   PRIMARY_BACKGROUND: "bg-green-500",
   PRIMARY_BACKGROUND_HOVER: "bg-green-600"
 }
+
+export const SessionEntityColors: EntityCardColors = {
+  BACKGROUND: "bg-pink-300",
+  TEXT: "text-pink-700",
+  SECONDARY_BACKGROUND: "bg-pink-400",
+  SECONDARY_BACKGROUND_HOVER: "bg-pink-500",
+  PRIMARY_BACKGROUND: "bg-pink-500",
+  PRIMARY_BACKGROUND_HOVER: "bg-pink-600"
+}
