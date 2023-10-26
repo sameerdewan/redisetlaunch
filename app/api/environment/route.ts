@@ -1,6 +1,6 @@
 import {auth} from "@clerk/nextjs";
 import {NextRequest, NextResponse} from "next/server";
-import environmentRepositoryClient from "@/data/EnvironmentRepository";
+import environmentRepositoryClient from "@/archived/data/EnvironmentRepository";
 
 export async function GET(req: NextRequest) {
     try {

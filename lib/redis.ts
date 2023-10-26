@@ -1,6 +1,6 @@
 import {createClient} from 'redis';
 import {Entity, EntityId, FieldDefinition, Repository, Schema} from "redis-om";
-import {Application, State} from "@/data/types";
+import {Application, State} from "@/archived/data/types";
 import {Nullable} from "@/lib/utils";
 
 declare global {

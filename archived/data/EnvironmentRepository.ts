@@ -1,5 +1,5 @@
 import {Entity} from "redis-om";
-import {Environment, EnvironmentSchema} from "@/models/Environment";
+import {Environment, EnvironmentSchema} from "@/archived/models/Environment";
 import {RedisRepositoryClient} from "@/lib/redis";
 
 class EnvironmentRepositoryClient extends RedisRepositoryClient {

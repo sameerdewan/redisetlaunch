@@ -1,7 +1,7 @@
 import {Entity} from "redis-om";
 import {RedisRepositoryClient} from "@/lib/redis";
 import {Nullable} from "@/lib/utils";
-import {Environment} from "@/data/types";
+import {Environment} from "@/archived/data/types";
 
 class EnvironmentRedisClient extends RedisRepositoryClient<Environment> {
     constructor() {
@@ -53,5 +53,18 @@ class EnvironmentRedisClient extends RedisRepositoryClient<Environment> {
             .return
             .all() as Environment[] ?? [];
         return environments.map(this.setId);
+    }
+
+    public async getEnvironmentByIdAndUserId(id: string, userId: string): Promise<Nullable<Environment>> {
+        await this.waitForRedisIndexCreated();
+        const environment = await this.repository
+            .search()
+            .where('id')
+            .eq(id)
+            .and('userId')
+            .eq(userId)
+            .return
+            .first() as Environment;
+        return this.setId(environment);
     }
 }

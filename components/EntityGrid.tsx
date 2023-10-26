@@ -4,7 +4,7 @@ import {Card} from "@/components/ui/card";
 import {Avatar, AvatarFallback} from "@/components/ui/avatar";
 import {AlarmClock, ArrowRight, EditIcon, LucideIcon, MoreVertical, Pin} from "lucide-react";
 import {Button} from "@/components/ui/button";
-import {BaseEntity} from "@/data/types";
+import {BaseEntity} from "@/archived/data/types";
 import {EntityAttribute, EntityCardColors, truncate} from "@/lib/utils";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 

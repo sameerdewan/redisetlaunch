@@ -1,5 +1,5 @@
 import {Entity} from "redis-om";
-import {Subscription, SubscriptionSchema} from "@/models/Subscription";
+import {Subscription, SubscriptionSchema} from "@/archived/models/Subscription";
 import {RedisRepositoryClient} from "@/lib/redis";
 
 class SubscriptionRepositoryClient extends RedisRepositoryClient {

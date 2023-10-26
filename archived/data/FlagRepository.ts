@@ -1,5 +1,5 @@
 import {Entity} from "redis-om";
-import {Flag, FlagSchema} from "@/models/Flag";
+import {Flag, FlagSchema} from "@/archived/models/Flag";
 import {RedisRepositoryClient} from "@/lib/redis";
 
 class FlagRepositoryClient extends RedisRepositoryClient {

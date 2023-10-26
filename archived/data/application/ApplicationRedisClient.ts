@@ -1,8 +1,8 @@
 import {Entity} from "redis-om";
 import {RedisRepositoryClient} from "@/lib/redis";
 import {Nullable} from "@/lib/utils";
-import {Application, State} from "@/data/types";
-import {ApplicationParityInterface} from "@/data/application/ApplicationParityInterface";
+import {Application, State} from "@/archived/data/types";
+import {ApplicationParityInterface} from "@/archived/data/application/ApplicationParityInterface";
 
 class ApplicationRedisClient extends RedisRepositoryClient<Application> implements ApplicationParityInterface {
     constructor() {
