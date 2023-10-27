@@ -24,7 +24,8 @@ export const organizationsRelations = relations(organizations, ({many, one}) => 
     subscription: one(subscriptions, {
         fields: [organizations.subscriptionId],
         references: [subscriptions.id]
-    })
+    }),
+    roles: many(roles)
 }));
 
 export type Organization = typeof organizations.$inferSelect;
@@ -78,7 +79,7 @@ export const plans = pgTable("plans", {
     roles: integer("roles").default(0),
     scheduling: boolean("scheduling").default(false),
     approvals: boolean("approvals").default(false),
-    createdBy: varchar("createdBy").default("root"),
+    createdBy: varchar("createdBy").default("system"),
     createdAt: timestamp("createdAt").defaultNow(),
     updatedBy: varchar("updatedBy"),
     updatedAt: timestamp("updatedAt")
@@ -99,7 +100,7 @@ export const roles = pgTable("roles", {
     id: varchar("id", {length: 12}).unique().primaryKey(),
     name: varchar("name", {length: 18}).notNull(),
     description: varchar("description", {length: 240}),
-    createdBy: varchar("createdBy").notNull(),
+    createdBy: varchar("createdBy").default("system"),
     createdAt: timestamp("createdAt").defaultNow(),
     updatedBy: varchar("updatedBy"),
     updatedAt: timestamp("updatedAt")
@@ -120,21 +121,16 @@ export type NewRole = typeof roles.$inferInsert;
 /*                          PERMISSIONS                            */
 /*******************************************************************/
 export const permissions = pgTable("permissions", {
-    organizationId: varchar("id", {length: 12}).notNull(),
     id: varchar("id", {length: 12}).unique().primaryKey(),
     name: varchar("name", {length: 18}).notNull(),
     description: varchar("description", {length: 240}),
-    createdBy: varchar("createdBy").notNull(),
+    createdBy: varchar("createdBy").default("system"),
     createdAt: timestamp("createdAt").defaultNow(),
     updatedBy: varchar("updatedBy"),
     updatedAt: timestamp("updatedAt")
 });
 
-export const permissionsRelations = relations(permissions, ({one, many}) => ({
-    organization: one(organizations, {
-        fields: [permissions.organizationId],
-        references: [organizations.id]
-    }),
+export const permissionsRelations = relations(permissions, ({many}) => ({
     roles: many(roles)
 }));
 
@@ -175,9 +171,10 @@ export const usersRelations = relations(users, ({one, many}) => ({
         fields: [users.organizationId],
         references: [organizations.id]
     }),
-    applications: many(applications)
+    accessibleApplications: many(applications),
+    roles: many(roles)
 }));
-2
+
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 
@@ -204,6 +201,7 @@ export const applicationsRelations = relations(applications, ({one, many}) => ({
         fields: [applications.createdBy, applications.updatedBy],
         references: [users.id, users.id]
     }),
+    usersWithAccess: many(users),
     environments: many(environments),
     flags: many(flags),
     sessions: many(sessions)
@@ -211,6 +209,27 @@ export const applicationsRelations = relations(applications, ({one, many}) => ({
 
 export type Application = typeof applications.$inferSelect;
 export type NewApplication = typeof  applications.$inferInsert;
+
+/*******************************************************************/
+/*              USERS / APPLICATIONS JUNCTION                      */
+/*******************************************************************/
+export const usersToApplications = pgTable("usersToApplications", {
+    userId: varchar("userId", {length: 12}).notNull().references(() => users.id),
+    applicationId: varchar("applicationId", {length: 12}).notNull().references(() => applications.id)
+}, junction => ({
+    pk: primaryKey(junction.userId, junction.applicationId)
+}));
+
+export const usersToApplicationsRelations = relations(usersToApplications, ({one}) => ({
+    user: one(users, {
+        fields: [usersToApplications.userId],
+        references: [users.id]
+    }),
+    application: one(applications, {
+        fields: [usersToApplications.applicationId],
+        references: [applications.id]
+    })
+}));
 
 /*******************************************************************/
 /*                          ENVIRONMENTS                           */
