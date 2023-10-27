@@ -1,4 +1,4 @@
-import {pgTable, varchar, timestamp} from "drizzle-orm/pg-core";
+import {pgTable, varchar, timestamp, primaryKey} from "drizzle-orm/pg-core";
 import {relations} from "drizzle-orm";
 
 /*******************************************************************/
@@ -166,6 +166,28 @@ export const sessionsRelations = relations(sessions, ({one, many}) => ({
         references: [environments.id]
     }),
     flags: many(flags)
+}));
+
+/*******************************************************************/
+/*                  FLAGS / SESSIONS JUNCTION                      */
+/*******************************************************************/
+
+export const flagsToSessions = pgTable("flagsToSessions", {
+    flagId: varchar("flagId", {length: 12}).notNull().references(() => flags.id),
+    sessionId: varchar("sessionId", {length: 12}).notNull().references(() => sessions.id)
+}, junction => ({
+    pk: primaryKey(junction.flagId, junction.sessionId)
+}));
+
+export const flagsToSessionsRelations = relations(flagsToSessions, ({one}) => ({
+    flag: one(flags, {
+        fields: [flagsToSessions.flagId],
+        references: [flags.id]
+    }),
+    session: one(sessions, {
+        fields: [flagsToSessions.sessionId],
+        references: [sessions.id]
+    })
 }));
 
 /*******************************************************************/
