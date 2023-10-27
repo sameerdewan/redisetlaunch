@@ -1,4 +1,4 @@
-import {pgTable, varchar, timestamp, primaryKey, integer, boolean, uniqueIndex} from "drizzle-orm/pg-core";
+import {pgTable, varchar, timestamp, primaryKey, integer, boolean, uniqueIndex, index} from "drizzle-orm/pg-core";
 import {relations} from "drizzle-orm";
 
 /*******************************************************************/
@@ -15,7 +15,12 @@ const organizations = pgTable("organizations", {
     updatedAt: timestamp("updated_at")
 }, (table) => {
     return {
-        subscriptionIdx: uniqueIndex("")
+        subscriptionIdx: uniqueIndex("subscription_idx").on(table.subscriptionId),
+        nameIdx: index("name_idx").on(table.name),
+        createdByIdx: index("created_by_idx").on(table.createdBy),
+        createdAtIdx: index("created_at_idx").on(table.createdAt),
+        updatedByIdx: index("updated_by_idx").on(table.updatedBy),
+        updatedAtIdx: index("updated_at_idx").on(table.updatedAt)
     };
 });
 
@@ -51,6 +56,16 @@ export const subscriptions = pgTable("subscriptions", {
     createdAt: timestamp("created_at").defaultNow(),
     updatedBy: varchar("updated_by"),
     updatedAt: timestamp("updated_at")
+}, (table) => {
+    return {
+        organizationIdx: uniqueIndex("organization_idx").on(table.organizationId),
+        planIdx: index("plan_idx").on(table.planId),
+        nameIdx: index("name_idx").on(table.name),
+        createdByIdx: index("created_by_idx").on(table.createdBy),
+        createdAtIdx: index("created_at_idx").on(table.createdAt),
+        updatedByIdx: index("updated_by_idx").on(table.updatedBy),
+        updatedAtIdx: index("updated_at_idx").on(table.updatedAt)
+    };
 });
 
 export const subscriptionsRelations = relations(subscriptions, ({one}) => ({
@@ -87,6 +102,14 @@ export const plans = pgTable("plans", {
     createdAt: timestamp("created_At").defaultNow(),
     updatedBy: varchar("updated_by"),
     updatedAt: timestamp("updated_at")
+}, (table) => {
+    return {
+        nameIdx: uniqueIndex("name_idx").on(table.name),
+        createdByIdx: index("created_by_idx").on(table.createdBy),
+        createdAtIdx: index("created_at_idx").on(table.createdAt),
+        updatedByIdx: index("updated_by_idx").on(table.updatedBy),
+        updatedAtIdx: index("updated_at_idx").on(table.updatedAt)
+    };
 });
 
 export const plansRelations = relations(plans, ({many}) => ({
@@ -108,6 +131,16 @@ export const roles = pgTable("roles", {
     createdAt: timestamp("created_at").defaultNow(),
     updatedBy: varchar("updated_by"),
     updatedAt: timestamp("updated_at")
+}, (table) => {
+    return {
+        organizationIdx: index("organization_idx").on(table.organizationId),
+        nameIdx: index("name_idx").on(table.name),
+        descriptionIdx: index("description_idx").on(table.description),
+        createdByIdx: index("created_by_idx").on(table.createdBy),
+        createdAtIdx: index("created_at_idx").on(table.createdAt),
+        updatedByIdx: index("updated_by_idx").on(table.updatedBy),
+        updatedAtIdx: index("updated_at_idx").on(table.updatedAt)
+    };
 });
 
 export const rolesRelations = relations(roles, ({one, many}) => ({
@@ -168,6 +201,21 @@ export const rolesToPermissionsRelations = relations(rolesToPermissions, ({one})
 export const users = pgTable("users", {
     organizationId: varchar("organization_id", {length: 12}).notNull(),
     id: varchar("id", {length: 12}).unique().primaryKey(),
+    username: varchar("name", {length: 18}).notNull(),
+    description: varchar("description", {length: 240}),
+    createdBy: varchar("created_by").default("system"),
+    createdAt: timestamp("created_at").defaultNow(),
+    updatedBy: varchar("updated_by"),
+    updatedAt: timestamp("updated_at")
+}, (table) => {
+    return {
+        usernameIdx: index("username_idx").on(table.username),
+        organizationIdx: index("organization_idx").on(table.organizationId),
+        createdBy: varchar("created_by").default("system"),
+        createdAt: timestamp("created_at").defaultNow(),
+        updatedBy: varchar("updated_by"),
+        updatedAt: timestamp("updated_at")
+    };
 });
 
 export const usersRelations = relations(users, ({one, many}) => ({
@@ -194,6 +242,16 @@ export const applications = pgTable("applications", {
     createdAt: timestamp("created_at").defaultNow(),
     updatedBy: varchar("updated_by"),
     updatedAt: timestamp("updated_at")
+}, (table) => {
+    return {
+        organizationIdx: index("organization_idx").on(table.organizationId),
+        nameIdx: index("name_idx").on(table.name),
+        descriptionIdx: index("description_idx").on(table.description),
+        createdByIdx: index("created_by_idx").on(table.createdBy),
+        createdAtIdx: index("created_at_idx").on(table.createdAt),
+        updatedByIdx: index("updated_by_idx").on(table.updatedBy),
+        updatedAtIdx: index("updated_at_idx").on(table.updatedAt)
+    };
 });
 
 export const applicationsRelations = relations(applications, ({one, many}) => ({
@@ -248,6 +306,17 @@ export const environments = pgTable("environments", {
     createdAt: timestamp("created_at").defaultNow(),
     updatedBy: varchar("updated_by"),
     updatedAt: timestamp("updated_at")
+}, (table) => {
+    return {
+        organizationIdx: index("organization_idx").on(table.organizationId),
+        applicationIdx: index("application_idx").on(table.applicationId),
+        nameIdx: index("name_idx").on(table.name),
+        descriptionIdx: index("description_idx").on(table.description),
+        createdByIdx: index("created_by_idx").on(table.createdBy),
+        createdAtIdx: index("created_at_idx").on(table.createdAt),
+        updatedByIdx: index("updated_by_idx").on(table.updatedBy),
+        updatedAtIdx: index("updated_at_idx").on(table.updatedAt)
+    };
 });
 
 export const environmentsRelations = relations(environments, ({one, many}) => ({
@@ -280,6 +349,18 @@ export const flags = pgTable("flags", {
     createdAt: timestamp("created_at").defaultNow(),
     updatedBy: varchar("updated_by"),
     updatedAt: timestamp("updated_at")
+}, (table) => {
+    return {
+        organizationIdx: index("organization_idx").on(table.organizationId),
+        applicationIdx: index("application_idx").on(table.applicationId),
+        environmentIdx: index("environment_idx").on(table.environmentId),
+        nameIdx: index("name_idx").on(table.name),
+        descriptionIdx: index("description_idx").on(table.description),
+        createdByIdx: index("created_by_idx").on(table.createdBy),
+        createdAtIdx: index("created_at_idx").on(table.createdAt),
+        updatedByIdx: index("updated_by_idx").on(table.updatedBy),
+        updatedAtIdx: index("updated_at_idx").on(table.updatedAt)
+    };
 });
 
 export const flagsRelations = relations(flags, ({one, many}) => ({
@@ -315,6 +396,18 @@ export const sessions = pgTable("sessions", {
     createdAt: timestamp("created_at").defaultNow(),
     updatedBy: varchar("updated_by"),
     updatedAt: timestamp("updated_at")
+}, (table) => {
+    return {
+        organizationIdx: index("organization_idx").on(table.organizationId),
+        applicationIdx: index("application_idx").on(table.applicationId),
+        environmentIdx: index("environment_idx").on(table.environmentId),
+        nameIdx: index("name_idx").on(table.name),
+        descriptionIdx: index("description_idx").on(table.description),
+        createdByIdx: index("created_by_idx").on(table.createdBy),
+        createdAtIdx: index("created_at_idx").on(table.createdAt),
+        updatedByIdx: index("updated_by_idx").on(table.updatedBy),
+        updatedAtIdx: index("updated_at_idx").on(table.updatedAt)
+    };
 });
 
 export const sessionsRelations = relations(sessions, ({one, many}) => ({
