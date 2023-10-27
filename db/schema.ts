@@ -5,15 +5,26 @@ import {relations} from "drizzle-orm";
 /*                         ORGANIZATIONS                           */
 /*******************************************************************/
 const organizations = pgTable("organizations", {
-    id: varchar("id", {length: 12}).unique().primaryKey()
+    subscriptionId: varchar("id", {length: 12}).unique(),
+    id: varchar("id", {length: 12}).unique().primaryKey(),
+    name: varchar("name", {length: 18}).notNull(),
+    description: varchar("description", {length: 240}),
+    createdBy: varchar("createdBy").notNull(),
+    createdAt: timestamp("createdAt").defaultNow(),
+    updatedBy: varchar("updatedBy"),
+    updatedAt: timestamp("updatedAt")
 });
 
-export const organizationsRelations = relations(organizations, ({many}) => ({
+export const organizationsRelations = relations(organizations, ({many, one}) => ({
     users: many(users),
     applications: many(applications),
     environments: many(environments),
     flags: many(flags),
-    sessions: many(sessions)
+    sessions: many(sessions),
+    subscription: one(subscriptions, {
+        fields: [organizations.subscriptionId],
+        references: [subscriptions.id]
+    })
 }));
 
 export type Organization = typeof organizations.$inferSelect;
@@ -22,6 +33,26 @@ export type NewOrganization = typeof organizations.$inferInsert;
 /*******************************************************************/
 /*                         SUBSCRIPTIONS                           */
 /*******************************************************************/
+export const subscriptions = pgTable("subscriptions", {
+    organizationId: varchar("id", {length: 12}).unique().notNull(),
+    id: varchar("id", {length: 12}).unique().primaryKey(),
+    name: varchar("name", {length: 18}).notNull(),
+    description: varchar("description", {length: 240}),
+    createdBy: varchar("createdBy").notNull(),
+    createdAt: timestamp("createdAt").defaultNow(),
+    updatedBy: varchar("updatedBy"),
+    updatedAt: timestamp("updatedAt")
+});
+
+export const subscriptionsRelations = relations(subscriptions, ({one}) => ({
+    organization: one(organizations, {
+        fields: [subscriptions.organizationId],
+        references: [organizations.id]
+    })
+}));
+
+export type Subscription = typeof subscriptions.$inferInsert;
+export type NewSubscription = typeof subscriptions.$inferInsert;
 
 /*******************************************************************/
 /*                              ROLES                              */
@@ -31,7 +62,7 @@ export type NewOrganization = typeof organizations.$inferInsert;
 /*                              USERS                              */
 /*******************************************************************/
 export const users = pgTable("users", {
-    organizationId: varchar("id", {length: 12}),
+    organizationId: varchar("id", {length: 12}).notNull(),
     id: varchar("id", {length: 12}).unique().primaryKey(),
 });
 
@@ -42,7 +73,7 @@ export const usersRelations = relations(users, ({one, many}) => ({
     }),
     applications: many(applications)
 }));
-
+2
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 
@@ -50,11 +81,11 @@ export type NewUser = typeof users.$inferInsert;
 /*                          APPLICATIONS                           */
 /*******************************************************************/
 export const applications = pgTable("applications", {
-    organizationId: varchar("id", {length: 12}),
+    organizationId: varchar("id", {length: 12}).notNull(),
     id: varchar("id", {length: 12}).unique().primaryKey(),
-    name: varchar("name", {length: 18}),
+    name: varchar("name", {length: 18}).notNull(),
     description: varchar("description", {length: 240}),
-    createdBy: varchar("createdBy"),
+    createdBy: varchar("createdBy").notNull(),
     createdAt: timestamp("createdAt").defaultNow(),
     updatedBy: varchar("updatedBy"),
     updatedAt: timestamp("updatedAt")
@@ -81,12 +112,12 @@ export type NewApplication = typeof  applications.$inferInsert;
 /*                          ENVIRONMENTS                           */
 /*******************************************************************/
 export const environments = pgTable("environments", {
-    organizationId: varchar("id", {length: 12}),
-    applicationId: varchar("id", {length: 12}),
+    organizationId: varchar("id", {length: 12}).notNull(),
+    applicationId: varchar("id", {length: 12}).notNull(),
     id: varchar("id", {length: 12}).unique().primaryKey(),
-    name: varchar("name", {length: 18}),
+    name: varchar("name", {length: 18}).notNull(),
     description: varchar("description", {length: 240}),
-    createdBy: varchar("createdBy"),
+    createdBy: varchar("createdBy").notNull(),
     createdAt: timestamp("createdAt").defaultNow(),
     updatedBy: varchar("updatedBy"),
     updatedAt: timestamp("updatedAt")
@@ -112,13 +143,13 @@ export type NewEnvironment = typeof environments.$inferInsert;
 /*                              FLAGS                              */
 /*******************************************************************/
 export const flags = pgTable("flags", {
-    organizationId: varchar("id", {length: 12}),
-    applicationId: varchar("id", {length: 12}),
-    environmentId: varchar("id", {length: 12}),
+    organizationId: varchar("id", {length: 12}).notNull(),
+    applicationId: varchar("id", {length: 12}).notNull(),
+    environmentId: varchar("id", {length: 12}).notNull(),
     id: varchar("id", {length: 12}).unique().primaryKey(),
-    name: varchar("name", {length: 18}),
+    name: varchar("name", {length: 18}).notNull(),
     description: varchar("description", {length: 240}),
-    createdBy: varchar("createdBy"),
+    createdBy: varchar("createdBy").notNull(),
     createdAt: timestamp("createdAt").defaultNow(),
     updatedBy: varchar("updatedBy"),
     updatedAt: timestamp("updatedAt")
@@ -148,13 +179,13 @@ export type NewFlag = typeof flags.$inferInsert;
 /*******************************************************************/
 
 export const sessions = pgTable("sessions", {
-    organizationId: varchar("id", {length: 12}),
-    applicationId: varchar("id", {length: 12}),
-    environmentId: varchar("id", {length: 12}),
+    organizationId: varchar("id", {length: 12}).notNull(),
+    applicationId: varchar("id", {length: 12}).notNull(),
+    environmentId: varchar("id", {length: 12}).notNull(),
     id: varchar("id", {length: 12}).unique().primaryKey(),
-    name: varchar("name", {length: 18}),
+    name: varchar("name", {length: 18}).notNull(),
     description: varchar("description", {length: 240}),
-    createdBy: varchar("createdBy"),
+    createdBy: varchar("createdBy").notNull(),
     createdAt: timestamp("createdAt").defaultNow(),
     updatedBy: varchar("updatedBy"),
     updatedAt: timestamp("updatedAt")
@@ -175,6 +206,9 @@ export const sessionsRelations = relations(sessions, ({one, many}) => ({
     }),
     flags: many(flags)
 }));
+
+export type Session = typeof sessions.$inferSelect;
+export type NewSession = typeof sessions.$inferInsert;
 
 /*******************************************************************/
 /*                  FLAGS / SESSIONS JUNCTION                      */
