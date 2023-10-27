@@ -65,7 +65,6 @@ export type NewSubscription = typeof subscriptions.$inferInsert;
 /*******************************************************************/
 /*                              PLANS                              */
 /*******************************************************************/
-
 export const plans = pgTable("plans", {
     id: varchar("id", {length: 12}).unique().primaryKey(),
     name: varchar("name", {length: 18}).unique().notNull(),
@@ -95,6 +94,73 @@ export type NewPlan = typeof plans.$inferInsert;
 /*******************************************************************/
 /*                              ROLES                              */
 /*******************************************************************/
+export const roles = pgTable("roles", {
+    organizationId: varchar("id", {length: 12}).notNull(),
+    id: varchar("id", {length: 12}).unique().primaryKey(),
+    name: varchar("name", {length: 18}).notNull(),
+    description: varchar("description", {length: 240}),
+    createdBy: varchar("createdBy").notNull(),
+    createdAt: timestamp("createdAt").defaultNow(),
+    updatedBy: varchar("updatedBy"),
+    updatedAt: timestamp("updatedAt")
+});
+
+export const rolesRelations = relations(roles, ({one, many}) => ({
+    organization: one(organizations, {
+        fields: [roles.organizationId],
+        references: [organizations.id]
+    }),
+    permissions: many(permissions)
+}));
+
+export type Role = typeof roles.$inferSelect;
+export type NewRole = typeof roles.$inferInsert;
+
+/*******************************************************************/
+/*                          PERMISSIONS                            */
+/*******************************************************************/
+export const permissions = pgTable("permissions", {
+    organizationId: varchar("id", {length: 12}).notNull(),
+    id: varchar("id", {length: 12}).unique().primaryKey(),
+    name: varchar("name", {length: 18}).notNull(),
+    description: varchar("description", {length: 240}),
+    createdBy: varchar("createdBy").notNull(),
+    createdAt: timestamp("createdAt").defaultNow(),
+    updatedBy: varchar("updatedBy"),
+    updatedAt: timestamp("updatedAt")
+});
+
+export const permissionsRelations = relations(permissions, ({one, many}) => ({
+    organization: one(organizations, {
+        fields: [permissions.organizationId],
+        references: [organizations.id]
+    }),
+    roles: many(roles)
+}));
+
+export type Permission = typeof permissions.$inferSelect;
+export type NewPermission = typeof permissions.$inferInsert;
+
+/*******************************************************************/
+/*               ROLES / PERMISSIONS JUNCTION                      */
+/*******************************************************************/
+export const rolesToPermissions = pgTable("rolesToPermissions", {
+    roleId: varchar("roleId", {length: 12}).notNull().references(() => roles.id),
+    permissionId: varchar("permissionId", {length: 12}).notNull().references(() => permissions.id)
+}, junction => ({
+    pk: primaryKey(junction.roleId, junction.permissionId)
+}));
+
+export const rolesToPermissionsRelations = relations(rolesToPermissions, ({one}) => ({
+    role: one(roles, {
+        fields: [rolesToPermissions.roleId],
+        references: [roles.id]
+    }),
+    permission: one(permissions, {
+        fields: [rolesToPermissions.permissionId],
+        references: [permissions.id]
+    })
+}));
 
 /*******************************************************************/
 /*                              USERS                              */
@@ -215,7 +281,6 @@ export type NewFlag = typeof flags.$inferInsert;
 /*******************************************************************/
 /*                            SESSIONS                             */
 /*******************************************************************/
-
 export const sessions = pgTable("sessions", {
     organizationId: varchar("id", {length: 12}).notNull(),
     applicationId: varchar("id", {length: 12}).notNull(),
@@ -251,7 +316,6 @@ export type NewSession = typeof sessions.$inferInsert;
 /*******************************************************************/
 /*                  FLAGS / SESSIONS JUNCTION                      */
 /*******************************************************************/
-
 export const flagsToSessions = pgTable("flagsToSessions", {
     flagId: varchar("flagId", {length: 12}).notNull().references(() => flags.id),
     sessionId: varchar("sessionId", {length: 12}).notNull().references(() => sessions.id)
