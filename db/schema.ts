@@ -1,5 +1,22 @@
-import {pgTable, varchar, timestamp, primaryKey, integer, boolean, uniqueIndex, index} from "drizzle-orm/pg-core";
+import {
+    pgTable,
+    varchar,
+    timestamp,
+    primaryKey,
+    integer,
+    boolean,
+    uniqueIndex,
+    index,
+    pgEnum
+} from "drizzle-orm/pg-core";
 import {relations} from "drizzle-orm";
+
+/*******************************************************************/
+/*                              ENUMS                              */
+/*******************************************************************/
+export const authEnum = pgEnum("auth", [
+   "email",
+]);
 
 /*******************************************************************/
 /*                         ORGANIZATIONS                           */
@@ -199,9 +216,11 @@ export const rolesToPermissionsRelations = relations(rolesToPermissions, ({one})
 /*                              USERS                              */
 /*******************************************************************/
 export const users = pgTable("users", {
-    organizationId: varchar("organization_id", {length: 12}).notNull(),
+    organizationId: varchar("organization_id", {length: 12}),
     id: varchar("id", {length: 12}).unique().primaryKey(),
     username: varchar("name", {length: 18}).notNull(),
+    password: varchar("password").notNull(),
+    auth: authEnum("auth").notNull(),
     description: varchar("description", {length: 240}),
     createdBy: varchar("created_by").default("system"),
     createdAt: timestamp("created_at").defaultNow(),
@@ -210,6 +229,7 @@ export const users = pgTable("users", {
 }, (table) => {
     return {
         usernameIdx: index("username_idx").on(table.username),
+        authIdx: index("auth_idx").on(table.auth),
         organizationIdx: index("organization_idx").on(table.organizationId),
         createdBy: varchar("created_by").default("system"),
         createdAt: timestamp("created_at").defaultNow(),
