@@ -1,4 +1,4 @@
-import {pgTable, varchar, timestamp, primaryKey} from "drizzle-orm/pg-core";
+import {pgTable, varchar, timestamp, primaryKey, integer, boolean} from "drizzle-orm/pg-core";
 import {relations} from "drizzle-orm";
 
 /*******************************************************************/
@@ -35,8 +35,12 @@ export type NewOrganization = typeof organizations.$inferInsert;
 /*******************************************************************/
 export const subscriptions = pgTable("subscriptions", {
     organizationId: varchar("id", {length: 12}).unique().notNull(),
+    stripeCustomerId: varchar("stripeCustomerId").unique(),
+    stripeSubscriptionId: varchar("stripeSubscriptionId").unique(),
+    planId: varchar("id", {length: 12}).notNull(),
     id: varchar("id", {length: 12}).unique().primaryKey(),
     name: varchar("name", {length: 18}).notNull(),
+    currentMonthApiCalls: integer("currentMonthApiCalls").default(0),
     description: varchar("description", {length: 240}),
     createdBy: varchar("createdBy").notNull(),
     createdAt: timestamp("createdAt").defaultNow(),
@@ -48,11 +52,45 @@ export const subscriptionsRelations = relations(subscriptions, ({one}) => ({
     organization: one(organizations, {
         fields: [subscriptions.organizationId],
         references: [organizations.id]
+    }),
+    plan: one(plans, {
+        fields: [subscriptions.planId],
+        references: [plans.id]
     })
 }));
 
 export type Subscription = typeof subscriptions.$inferInsert;
 export type NewSubscription = typeof subscriptions.$inferInsert;
+
+/*******************************************************************/
+/*                              PLANS                              */
+/*******************************************************************/
+
+export const plans = pgTable("plans", {
+    id: varchar("id", {length: 12}).unique().primaryKey(),
+    name: varchar("name", {length: 18}).unique().notNull(),
+    description: varchar("description", {length: 240}),
+    monthlyApiCalls: integer("allowedApiCalls").default(0),
+    seats: integer("seats").default(0),
+    flags: integer("flags").default(0),
+    environments: integer("environments").default(0),
+    applications: integer("applications").default(0),
+    sessions: integer("sessions").default(0),
+    roles: integer("roles").default(0),
+    scheduling: boolean("scheduling").default(false),
+    approvals: boolean("approvals").default(false),
+    createdBy: varchar("createdBy").default("root"),
+    createdAt: timestamp("createdAt").defaultNow(),
+    updatedBy: varchar("updatedBy"),
+    updatedAt: timestamp("updatedAt")
+});
+
+export const plansRelations = relations(plans, ({many}) => ({
+    subscriptions: many(subscriptions)
+}));
+
+export type Plan = typeof plans.$inferInsert;
+export type NewPlan = typeof plans.$inferInsert;
 
 /*******************************************************************/
 /*                              ROLES                              */
