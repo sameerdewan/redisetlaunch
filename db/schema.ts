@@ -324,6 +324,10 @@ export const environmentsRelations = relations(environments, ({one, many}) => ({
         fields: [environments.organizationId],
         references: [organizations.id]
     }),
+    user: one(users, {
+        fields: [environments.createdBy, environments.updatedBy],
+        references: [users.id, users.id]
+    }),
     application: one(applications, {
         fields: [environments.applicationId],
         references: [applications.id]
@@ -368,6 +372,10 @@ export const flagsRelations = relations(flags, ({one, many}) => ({
         fields: [flags.organizationId],
         references: [organizations.id]
     }),
+    user: one(users, {
+        fields: [flags.createdBy, flags.updatedBy],
+        references: [users.id, users.id]
+    }),
     application: one(applications, {
         fields: [flags.applicationId],
         references: [applications.id]
@@ -392,7 +400,7 @@ export const sessions = pgTable("sessions", {
     id: varchar("id", {length: 12}).unique().primaryKey(),
     name: varchar("name", {length: 18}).notNull(),
     description: varchar("description", {length: 240}),
-    createdBy: varchar("created_by").notNull(),
+    createdBy: varchar("created_by").default("system"),
     createdAt: timestamp("created_at").defaultNow(),
     updatedBy: varchar("updated_by"),
     updatedAt: timestamp("updated_at")
@@ -403,9 +411,7 @@ export const sessions = pgTable("sessions", {
         environmentIdx: index("environment_idx").on(table.environmentId),
         nameIdx: index("name_idx").on(table.name),
         descriptionIdx: index("description_idx").on(table.description),
-        createdByIdx: index("created_by_idx").on(table.createdBy),
         createdAtIdx: index("created_at_idx").on(table.createdAt),
-        updatedByIdx: index("updated_by_idx").on(table.updatedBy),
         updatedAtIdx: index("updated_at_idx").on(table.updatedAt)
     };
 });
