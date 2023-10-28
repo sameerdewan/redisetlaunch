@@ -7,15 +7,20 @@ import {
     boolean,
     uniqueIndex,
     index,
-    pgEnum
+    pgEnum, json
 } from "drizzle-orm/pg-core";
 import {relations} from "drizzle-orm";
 
 /*******************************************************************/
 /*                              ENUMS                              */
 /*******************************************************************/
-export const authEnum = pgEnum("auth", [
+export const authEnum = pgEnum("auth_enum", [
    "email",
+]);
+
+export const flagTypeEnum = pgEnum("flag_type_enum", [
+    "variable",
+    "static"
 ]);
 
 /*******************************************************************/
@@ -371,10 +376,12 @@ export const flags = pgTable("flags", {
     id: varchar("id", {length: 12}).unique().primaryKey(),
     name: varchar("name", {length: 18}).notNull(),
     description: varchar("description", {length: 240}),
+    type: flagTypeEnum("type").notNull(),
+    value: json("value"),
     createdBy: varchar("created_by").notNull(),
     createdAt: timestamp("created_at").defaultNow(),
     updatedBy: varchar("updated_by"),
-    updatedAt: timestamp("updated_at")
+    updatedAt: timestamp("updated_at"),
 }, (table) => {
     return {
         organizationIdx: index("organization_idx").on(table.organizationId),
@@ -382,6 +389,7 @@ export const flags = pgTable("flags", {
         environmentIdx: index("environment_idx").on(table.environmentId),
         nameIdx: index("name_idx").on(table.name),
         descriptionIdx: index("description_idx").on(table.description),
+        typeIdx: index("type_idx").on(table.type),
         createdByIdx: index("created_by_idx").on(table.createdBy),
         createdAtIdx: index("created_at_idx").on(table.createdAt),
         updatedByIdx: index("updated_by_idx").on(table.updatedBy),
@@ -406,11 +414,72 @@ export const flagsRelations = relations(flags, ({one, many}) => ({
         fields: [flags.environmentId],
         references: [environments.id]
     }),
-    sessions: many(sessions)
+    sessions: many(sessions),
+    flagVariations: many(flagVariations)
 }));
 
 export type Flag = typeof flags.$inferSelect;
 export type NewFlag = typeof flags.$inferInsert;
+
+/*******************************************************************/
+/*                        FLAG_VARIATIONS                          */
+/*******************************************************************/
+export const flagVariations = pgTable("flag_variations", {
+    organizationId: varchar("organization_id", {length: 12}).notNull(),
+    applicationId: varchar("application_id", {length: 12}).notNull(),
+    environmentId: varchar("environment_id", {length: 12}).notNull(),
+    flagId: varchar("flag_id", {length: 12}).notNull(),
+    id: varchar("id", {length: 12}).unique().primaryKey(),
+    name: varchar("name", {length: 18}).notNull(),
+    description: varchar("description", {length: 240}),
+    type: flagTypeEnum("type").notNull(),
+    value: json("value"),
+    createdBy: varchar("created_by").notNull(),
+    createdAt: timestamp("created_at").defaultNow(),
+    updatedBy: varchar("updated_by"),
+    updatedAt: timestamp("updated_at"),
+}, (table) => {
+    return {
+        organizationIdx: index("organization_idx").on(table.organizationId),
+        applicationIdx: index("application_idx").on(table.applicationId),
+        environmentIdx: index("environment_idx").on(table.environmentId),
+        flagIdx: index("flag_idx").on(table.flagId),
+        nameIdx: index("name_idx").on(table.name),
+        descriptionIdx: index("description_idx").on(table.description),
+        typeIdx: index("type_idx").on(table.type),
+        createdByIdx: index("created_by_idx").on(table.createdBy),
+        createdAtIdx: index("created_at_idx").on(table.createdAt),
+        updatedByIdx: index("updated_by_idx").on(table.updatedBy),
+        updatedAtIdx: index("updated_at_idx").on(table.updatedAt)
+    };
+});
+
+export const flagVariationsRelations = relations(flagVariations, ({one, many}) => ({
+    organization: one(organizations, {
+        fields: [flagVariations.organizationId],
+        references: [organizations.id]
+    }),
+    user: one(users, {
+        fields: [flagVariations.createdBy, flagVariations.updatedBy],
+        references: [users.id, users.id]
+    }),
+    application: one(applications, {
+        fields: [flagVariations.applicationId],
+        references: [applications.id]
+    }),
+    environment: one(environments, {
+        fields: [flagVariations.environmentId],
+        references: [environments.id]
+    }),
+    sessions: many(sessions),
+    flag: one(flags, {
+        fields: [flagVariations.flagId],
+        references: [flags.id]
+    })
+}));
+
+export type FlagVariation = typeof flagVariations.$inferSelect;
+export type NewFlagVariation = typeof flagVariations.$inferInsert;
 
 /*******************************************************************/
 /*                            SESSIONS                             */
@@ -474,6 +543,27 @@ export const flagsToSessionsRelations = relations(flagsToSessions, ({one}) => ({
     }),
     session: one(sessions, {
         fields: [flagsToSessions.sessionId],
+        references: [sessions.id]
+    })
+}));
+
+/*******************************************************************/
+/*           FLAG_VARIATIONS / SESSION JUNCTION                    */
+/*******************************************************************/
+export const flagVariationsToSessions = pgTable("flag_variations_to_sessions", {
+    flagVariationId: varchar("flag_variation_id", {length: 12}).notNull().references(() => flagVariations.id),
+    sessionId: varchar("session_id", {length: 12}).notNull().references(() => sessions.id)
+}, junction => ({
+    pk: primaryKey(junction.flagVariationId, junction.sessionId)
+}));
+
+export const flagVariationsToSessionsRelations = relations(flagVariationsToSessions, ({one}) => ({
+    flagVariation: one(flagVariations, {
+        fields: [flagVariationsToSessions.flagVariationId],
+        references: [flagVariations.id]
+    }),
+    session: one(sessions, {
+        fields: [flagVariationsToSessions.sessionId],
         references: [sessions.id]
     })
 }));
