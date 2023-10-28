@@ -1,11 +1,18 @@
-import { neon, neonConfig } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-http';
+
+import { drizzle } from 'drizzle-orm/node-postgres';
 import * as schema from "@/db/schema";
+import {Client} from "pg";
 
+const client = new Client({
+    host: process.env.SQL_DB_HOST,
+    port: Number(process.env.SQL_DB_PORT),
+    user: process.env.SQL_DB_USER,
+    password: process.env.SQL_DB_PASSWORD,
+    database: process.env.SQL_DB_DATABASE
+});
 
-neonConfig.fetchConnectionCache = true;
+await client.connect();
 
-const sql = neon(process.env.DRIZZLE_DATABASE_URL!);
-const db = drizzle(sql, {schema});
+const db = drizzle(client, {schema});
 
 export default db;
