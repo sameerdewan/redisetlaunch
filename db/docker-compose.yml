@@ -9,3 +9,8 @@ services:
       POSTGRES_DB: redisetlaunch
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg-isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
