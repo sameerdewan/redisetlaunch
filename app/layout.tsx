@@ -16,7 +16,7 @@ const RootLayout: React.FC<React.PropsWithChildren> = ({children}) => {
     // Returned UI
     return (
         <html lang="en">
-        <body className={cn(inter.className, 'bg-gray-50')}>
+        <body className={cn(inter.className, 'bg-slate-100')}>
         {children}
         <ScrollToTopButton/>
         </body>
