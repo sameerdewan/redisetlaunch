@@ -1,21 +1,6 @@
-2023-10-29T07:08:28.510Z    +74ms [debug] Config loaded {"version":"2.32.2","cdkVersion":"2.101.1","constructsVersion":"10.2.69","config":{"name":"redisetlaunch","region":"us-east-1","stage":"dev","ssmPrefix":"/sst/redisetlaunch/dev/"},"metafile":{"inputs":{"sst.config.ts":{"bytes":217,"imports":[{"path":"sst","kind":"import-statement","external":true},{"path":"sst/constructs","kind":"import-statement","external":true}],"format":"esm"}},"outputs":{".sst.config.1698563308446.mjs":{"imports":[],"exports":["default"],"entryPoint":"sst.config.ts","inputs":{"sst.config.ts":{"bytesInOutput":128}},"bytes":310}}},"paths":{"config":"/Users/sameer/redisetlaunch/sst.config.ts","root":"/Users/sameer/redisetlaunch","out":"/Users/sameer/redisetlaunch/.sst","artifacts":"/Users/sameer/redisetlaunch/.sst/artifacts"}}
-2023-10-29T07:08:29.457Z   +947ms [debug] Using AWS profile 
-2023-10-29T07:08:29.459Z     +2ms [debug] Created AWS client IoTClient
-2023-10-29T07:08:29.459Z     +0ms [debug] Getting IoT endpoint
-2023-10-29T07:08:29.479Z    +20ms [debug] Synthesizing stacks...
-2023-10-29T07:08:29.484Z     +5ms [debug] Created AWS client STSClient
-2023-10-29T07:08:29.622Z   +138ms [debug] Using IoT endpoint: a3fm77rhnvqxve-ats.iot.us-east-1.amazonaws.com
-2023-10-29T07:08:29.622Z     +0ms [debug] Initializing bootstrap context
-2023-10-29T07:08:29.623Z     +1ms [debug] Created AWS client CloudFormationClient
-2023-10-29T07:08:29.694Z    +71ms [debug] Using identity Account: 626421359097 User: AIDAZDWM7MH4RAQB56POJ
-2023-10-29T07:08:29.700Z     +6ms [debug] Generating types in /Users/sameer/redisetlaunch/.sst/types
-2023-10-29T07:08:29.808Z   +108ms [debug] Running 1 deferred tasks with concurrency: 7
-2023-10-29T07:08:30.094Z   +286ms [debug] Loaded bootstrap status
-2023-10-29T07:08:30.094Z     +0ms [debug] Bootstrap context initialized {"status":"ready","version":"7.2","bucket":"sstbootstrap-useast124d14e4b-11ga6k364hupt"}
-2023-10-29T07:08:30.096Z     +2ms [debug] Created AWS client S3Client
-2023-10-29T07:08:30.192Z    +96ms [debug] 
-2023-10-29T07:08:30.192Z     +0ms [debug] Loading v2 AWS SDK
-2023-10-29T07:08:30.193Z     +1ms [debug] Finished synthesizing
-2023-10-29T07:08:30.369Z   +176ms [debug] IoT connected
-2023-10-29T07:08:30.436Z    +67ms [debug] Fetching metadata for stack dev-redisetlaunch-Site failed {"name":"NoSuchKey","$fault":"client","$metadata":{"httpStatusCode":404,"requestId":"SK7305WFD4NSXF75","extendedRequestId":"PPwISTtnjM4c8RXTXYeqc50BV4srUi6WrHM6M8D4ID4ajFmiww/b138jo1unw9kfcn4lyevFLfI=","attempts":1,"totalRetryDelay":0},"Code":"NoSuchKey","Key":"stackMetadata/app.redisetlaunch/stage.dev/stack.dev-redisetlaunch-Site.json","RequestId":"SK7305WFD4NSXF75","HostId":"PPwISTtnjM4c8RXTXYeqc50BV4srUi6WrHM6M8D4ID4ajFmiww/b138jo1unw9kfcn4lyevFLfI=","message":"The specified key does not exist."}
-2023-10-29T07:08:30.438Z     +2ms [debug] Created AWS client SSMClient
+2023-10-29T22:43:36.461Z    +74ms [debug] Config loaded {"version":"2.32.2","cdkVersion":"2.101.1","constructsVersion":"10.2.69","config":{"name":"redisetlaunch","region":"us-east-1","stage":"dev","ssmPrefix":"/sst/redisetlaunch/dev/"},"metafile":{"inputs":{"sst.config.ts":{"bytes":217,"imports":[{"path":"sst","kind":"import-statement","external":true},{"path":"sst/constructs","kind":"import-statement","external":true}],"format":"esm"}},"outputs":{".sst.config.1698619416396.mjs":{"imports":[],"exports":["default"],"entryPoint":"sst.config.ts","inputs":{"sst.config.ts":{"bytesInOutput":128}},"bytes":310}}},"paths":{"config":"/Users/sameer/redisetlaunch/sst.config.ts","root":"/Users/sameer/redisetlaunch","out":"/Users/sameer/redisetlaunch/.sst","artifacts":"/Users/sameer/redisetlaunch/.sst/artifacts"}}
+2023-10-29T22:43:37.419Z   +958ms [debug] Using AWS profile 
+2023-10-29T22:43:37.421Z     +2ms [debug] Created AWS client IoTClient
+2023-10-29T22:43:37.421Z     +0ms [debug] Getting IoT endpoint
+2023-10-29T22:43:37.439Z    +18ms [debug] Synthesizing stacks...
+2023-10-29T22:43:37.444Z     +5ms [debug] Created AWS client STSClient

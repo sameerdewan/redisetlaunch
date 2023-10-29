@@ -44,9 +44,6 @@ dependencies:
   clsx:
     specifier: 2.0.0
     version: 2.0.0
-  dynamoose:
-    specifier: ^3.2.1
-    version: 3.2.1
   dyngoose:
     specifier: 4.8.2
     version: 4.8.2(@aws-sdk/client-dynamodb@3.438.0)
@@ -107,7 +104,7 @@ devDependencies:
     specifier: '8'
     version: 8.4.31
   sst:
-    specifier: 2.32.2
+    specifier: ^2.32.2
     version: 2.32.2(@types/react@18.2.33)
   tailwindcss:
     specifier: '3'
@@ -1654,6 +1651,10 @@ packages:
       '@babel/helper-string-parser': 7.22.5
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
+
+  /@balena/dockerignore@1.0.2:
+    resolution: {integrity: sha512-wMue2Sy4GAVTk6Ic4tJVcnfdau+gx2EnG7S+uAEe+TWJFqE4YoWN4/H8MSLj4eYJKxGg26lZwboEniNiNwZQ6Q==}
+    dev: true
 
   /@envelop/core@3.0.6:
     resolution: {integrity: sha512-06t1xCPXq6QFN7W1JUEf68aCwYN0OUDNAIoJe7bAqhaoa2vn7NCcuX1VHkJ/OWpmElUgCsRO6RiBbIru1in0Ig==}
@@ -4065,7 +4066,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.22.1
-      caniuse-lite: 1.0.30001557
+      caniuse-lite: 1.0.30001558
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -4087,7 +4088,17 @@ packages:
       '@aws-cdk/asset-awscli-v1': 2.2.201
       '@aws-cdk/asset-kubectl-v20': 2.1.2
       '@aws-cdk/asset-node-proxy-agent-v6': 2.0.1
+      '@balena/dockerignore': 1.0.2
+      case: 1.6.3
       constructs: 10.2.69
+      fs-extra: 11.1.1
+      ignore: 5.2.4
+      jsonschema: 1.4.1
+      minimatch: 3.1.2
+      punycode: 2.3.0
+      semver: 7.5.4
+      table: 6.8.1
+      yaml: 1.10.2
     dev: true
     bundledDependencies:
       - '@balena/dockerignore'
@@ -4265,7 +4276,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001557
+      caniuse-lite: 1.0.30001558
       electron-to-chromium: 1.4.569
       node-releases: 2.0.13
       update-browserslist-db: 1.0.13(browserslist@4.22.1)
@@ -4281,7 +4292,7 @@ packages:
     resolution: {integrity: sha512-xq+q3SRMOxGivLhBNaUdC64hDTQwejJ+H0T/NB1XMtTVEwNTrfFF3gAxiyW0Bu/xWEGhjVKgUcMhCrUy2+uCWg==}
     dependencies:
       base64-js: 1.5.1
-      ieee754: 1.1.13
+      ieee754: 1.2.1
       isarray: 1.0.0
     dev: true
 
@@ -4330,8 +4341,13 @@ packages:
     resolution: {integrity: sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==}
     engines: {node: '>= 6'}
 
-  /caniuse-lite@1.0.30001557:
-    resolution: {integrity: sha512-91oR7hLNUP3gG6MLU+n96em322a8Xzes8wWdBKhLgUoiJsAF5irZnxSUCbc+qUZXNnPCfUwLOi9ZCZpkvjQajw==}
+  /caniuse-lite@1.0.30001558:
+    resolution: {integrity: sha512-/Et7DwLqpjS47JPEcz6VnxU9PwcIdVi0ciLXRWBQdj1XFye68pSQYpV0QtPTfUKWuOaEig+/Vez2l74eDc1tPQ==}
+
+  /case@1.6.3:
+    resolution: {integrity: sha512-mzDSXIPaFwVDvZAHqZ9VlbyF4yyXRuX6IvB06WvPYkqJVO24kX1PPhv9bfpKNFZyxYFmmgo03HUiD8iklmJYRQ==}
+    engines: {node: '>= 0.8.0'}
+    dev: true
 
   /cdk-assets@2.101.1:
     resolution: {integrity: sha512-ixLlEKJsO+7jqBSYVz+BdW8E3/wO9DDZqJStwC88aKBSpqlKDECv89IBgQ6GQFQ2cjXfZxhkLFNZCLukvIvxRw==}
@@ -4509,7 +4525,7 @@ packages:
     resolution: {integrity: sha512-rraC8NXWOEjhADbZe9QBNzLAN5Q3fsTPQtBV+fEVj6xKIgDgNiEVE6ZNfHpZOqfQ21YUzfVNUXLOEZquYvQPPg==}
     dependencies:
       leven: 2.1.0
-      minimist: 1.2.6
+      minimist: 1.2.8
 
   /compress-commons@4.1.2:
     resolution: {integrity: sha512-D3uMHtGc/fcO1Gt1/L7i1e33VOvD4A9hfQLP+6ewd+BvG/gQ84Yh4oftEhAdjSMgBgwGL+jsppT7JYNpo6MHHg==}
@@ -4797,23 +4813,6 @@ packages:
       inherits: 2.0.4
       readable-stream: 3.6.2
       stream-shift: 1.0.1
-
-  /dynamoose-utils@3.2.1:
-    resolution: {integrity: sha512-dQwmBAs6wRzpkotsTaJq/MLrS+PFmuznxuT45PHu1gidzI1f41/OKjaw2dSsd1Btce+vFwikfZGMLUSJfO850w==}
-    dependencies:
-      js-object-utilities: 2.1.0
-    dev: false
-
-  /dynamoose@3.2.1:
-    resolution: {integrity: sha512-1IUAW3Cm5/3ABpHBCYqSSfmKXrwmBFxZyvN5utPdIknFq6QLp0Xu5HCeyUXI/bmfGIPjrMuCR/T2tI60+fixPQ==}
-    dependencies:
-      '@aws-sdk/client-dynamodb': 3.438.0
-      '@aws-sdk/util-dynamodb': 3.438.0(@aws-sdk/client-dynamodb@3.438.0)
-      dynamoose-utils: 3.2.1
-      js-object-utilities: 2.1.0
-    transitivePeerDependencies:
-      - aws-crt
-    dev: false
 
   /dyngoose@4.8.2(@aws-sdk/client-dynamodb@3.438.0):
     resolution: {integrity: sha512-sLrVmkMWoA7NtkZmZxpfqQN8mZTp47zh2zsMtObE6q1TO/Kvx0QC0sHUu3+jPNksySneHNFLTXjnitcRzmbEHA==}
@@ -5514,6 +5513,15 @@ packages:
     resolution: {integrity: sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==}
     dev: true
 
+  /fs-extra@11.1.1:
+    resolution: {integrity: sha512-MGIE4HOvQCeUCzmlHs0vXpih4ysz4wg9qiSAu6cd42lVwPbTM1TjV7RusoyQqMmk/95gdQZX72u+YW+c3eEpFQ==}
+    engines: {node: '>=14.14'}
+    dependencies:
+      graceful-fs: 4.2.11
+      jsonfile: 6.1.0
+      universalify: 2.0.0
+    dev: true
+
   /fs-extra@9.1.0:
     resolution: {integrity: sha512-hcg3ZmepS30/7BSFqRvoo3DOMQu7IjqxO5nCDt+zM9XWjb33Wg7ziNT+Qvqbuc3+gWpzO02JubVyk2G4Zvo1OQ==}
     engines: {node: '>=10'}
@@ -6185,10 +6193,6 @@ packages:
     resolution: {integrity: sha512-W+oqK4H+r5sITxfxpSU+MMdr/YSWGvgZMQDIsNoBDGGy4i7GBPTtvFKibQzW06n3U3TqHjhvBJsirShsEJ6eeQ==}
     dev: true
 
-  /js-object-utilities@2.1.0:
-    resolution: {integrity: sha512-X62npvVTfyNELV4gPU4jJSzFZbdxk3zH/FxlBrZ6n+AGKpGyhMpsPs00tjtqTLy582zG4bvaG5fuKMm/zA1gng==}
-    dev: false
-
   /js-sdsl@4.3.0:
     resolution: {integrity: sha512-mifzlm2+5nZ+lEcLJMoBK0/IH/bDg8XnJfd/Wq6IP+xoCjLZsTOnV2QpxlVbX9bMnkl5PdEjNtBJ9Cj1NjifhQ==}
 
@@ -6245,6 +6249,10 @@ packages:
       universalify: 2.0.0
     optionalDependencies:
       graceful-fs: 4.2.11
+    dev: true
+
+  /jsonschema@1.4.1:
+    resolution: {integrity: sha512-S6cATIPVv1z0IlxdN+zUk5EPjkGCdnhN4wVSBlvoUO1tOLJootbo9CquNJmbIh4yikWHiUedhRYrNPn1arpEmQ==}
     dev: true
 
   /jsx-ast-utils@3.3.5:
@@ -6531,6 +6539,7 @@ packages:
 
   /minimist@1.2.6:
     resolution: {integrity: sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==}
+    dev: true
 
   /minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
@@ -6572,7 +6581,7 @@ packages:
       duplexify: 4.1.2
       help-me: 3.0.0
       inherits: 2.0.4
-      minimist: 1.2.6
+      minimist: 1.2.8
       mqtt-packet: 6.10.0
       pump: 3.0.0
       readable-stream: 3.6.2
@@ -6667,7 +6676,7 @@ packages:
       '@next/env': 13.5.4
       '@swc/helpers': 0.5.2
       busboy: 1.6.0
-      caniuse-lite: 1.0.30001557
+      caniuse-lite: 1.0.30001558
       postcss: 8.4.31
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -8368,6 +8377,7 @@ packages:
 
   /yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
+    requiresBuild: true
 
   /yaml@1.10.2:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
