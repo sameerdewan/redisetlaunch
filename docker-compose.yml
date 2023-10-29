@@ -9,19 +9,10 @@ services:
       POSTGRES_DB: redisetlaunch
     ports:
       - "5432:5432"
+    expose:
+      - "5432"
     healthcheck:
       test: ["CMD-SHELL", "pg-isready -U postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
-  web:
-    build:
-      context: ./
-      target: runner
-    volumes:
-      - .:/app
-    command: npm run dev
-    ports:
-      - "3000:3000"
-    environment:
-      NODE_ENV: development

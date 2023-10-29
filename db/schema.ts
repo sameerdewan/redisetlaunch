@@ -172,7 +172,8 @@ export const rolesRelations = relations(roles, ({one, many}) => ({
         fields: [roles.organizationId],
         references: [organizations.id]
     }),
-    permissions: many(permissions)
+    permissions: many(rolesToPermissions),
+    users: many(usersToRoles)
 }));
 
 export type Role = typeof roles.$inferSelect;
@@ -192,7 +193,7 @@ export const permissions = pgTable("permissions", {
 });
 
 export const permissionsRelations = relations(permissions, ({many}) => ({
-    roles: many(roles)
+    roles: many(rolesToPermissions)
 }));
 
 export type Permission = typeof permissions.$inferSelect;
@@ -250,12 +251,34 @@ export const usersRelations = relations(users, ({one, many}) => ({
         fields: [users.organizationId],
         references: [organizations.id]
     }),
-    accessibleApplications: many(applications),
-    roles: many(roles)
+    accessibleApplications: many(usersToApplications),
+    roles: many(usersToRoles)
 }));
 
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
+
+/*******************************************************************/
+/*                  USERS / ROLES JUNCTION                         */
+/*******************************************************************/
+export const usersToRoles = pgTable("users_to_roles", {
+    userId: varchar("userId", {length: 12}).notNull().references(() => users.id),
+    roleId: varchar("role_id", {length: 12}).notNull().references(() => roles.id)
+}, junction => ({
+    pk: primaryKey(junction.userId, junction.roleId)
+}));
+
+export const usersToRolesRelations = relations(usersToRoles, ({one}) => ({
+    user: one(users, {
+        fields: [usersToRoles.userId],
+        references: [users.id]
+    }),
+    role: one(roles, {
+        fields: [usersToRoles.roleId],
+        references: [roles.id]
+    })
+}));
+
 
 /*******************************************************************/
 /*                          APPLICATIONS                           */
@@ -290,7 +313,7 @@ export const applicationsRelations = relations(applications, ({one, many}) => ({
         fields: [applications.createdBy, applications.updatedBy],
         references: [users.id, users.id]
     }),
-    usersWithAccess: many(users),
+    usersWithAccess: many(usersToApplications),
     environments: many(environments),
     flags: many(flags),
     sessions: many(sessions)
@@ -414,7 +437,7 @@ export const flagsRelations = relations(flags, ({one, many}) => ({
         fields: [flags.environmentId],
         references: [environments.id]
     }),
-    sessions: many(sessions),
+    sessions: many(flagsToSessions),
     flagVariations: many(flagVariations)
 }));
 
@@ -471,7 +494,7 @@ export const flagVariationsRelations = relations(flagVariations, ({one, many}) =
         fields: [flagVariations.environmentId],
         references: [environments.id]
     }),
-    sessions: many(sessions),
+    sessions: many(flagVariationsToSessions),
     flag: one(flags, {
         fields: [flagVariations.flagId],
         references: [flags.id]
@@ -520,7 +543,8 @@ export const sessionsRelations = relations(sessions, ({one, many}) => ({
         fields: [sessions.environmentId],
         references: [environments.id]
     }),
-    flags: many(flags)
+    flags: many(flagsToSessions),
+    flagVariations: many(flagVariationsToSessions)
 }));
 
 export type Session = typeof sessions.$inferSelect;
