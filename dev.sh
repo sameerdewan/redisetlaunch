@@ -1,9 +1,5 @@
 #!/bin/bash
 
-cd db && docker-compose up -d
+docker-compose up
 
-cd .. && next dev
-
-cd db && docker-compose down
-
-cd ..
+docker-compose down

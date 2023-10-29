@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 
 services:
   db:
@@ -14,3 +14,14 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+  web:
+    build:
+      context: ./
+      target: runner
+    volumes:
+      - .:/app
+    command: npm run dev
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
