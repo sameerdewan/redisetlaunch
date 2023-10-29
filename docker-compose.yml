@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  dynamodb:
+    image: amazon/dynamodb-local
+    ports:
+      - "8000:8000"
+    networks:
+      - "development"
+
+  dynamodb-admin:
+    image: aaronshaf/dynamodb-admin
+    env_file:
+      - .env
+    ports:
+      - "8001:8001"
+    networks:
+      - development
+
+networks:
+  development:
