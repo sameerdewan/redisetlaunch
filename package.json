@@ -1,6 +1,6 @@
 {
-  "name": "saas-ai-platform",
-  "version": "0.1.0",
+  "name": "RediSetLaunch",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
